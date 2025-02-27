@@ -2,12 +2,15 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const apiRoutes = require('./routes/apiRoutes');
+const path = require('path');
 
 const app = express();
 const port = 3000;
 
 app.use(bodyParser.json());
 app.use('/api', apiRoutes);
+
+app.use(express.static('build'));
 
 app.get('*', (req,res) => {
   res.sendFile(path.join(__dirname, '..', 'dist', 'index.html'));
