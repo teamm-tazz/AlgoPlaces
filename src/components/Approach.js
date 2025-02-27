@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Footer() {
+function Approach() {
   return (
     <footer>
       <p>&copy; 2023 My Web App</p>
@@ -8,4 +8,4 @@ function Footer() {
   );
 }
 
-export default Footer;
+export default Approach;
