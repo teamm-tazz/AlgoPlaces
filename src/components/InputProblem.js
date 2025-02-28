@@ -1,6 +1,7 @@
 import React from 'react';
+//grab the object
 
-function InputProblem() {
+atfunction InputProblem() {
   return (
     <footer>
       <p>&copy; 2023 My Web App</p>

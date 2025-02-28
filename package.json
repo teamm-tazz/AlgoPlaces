@@ -10,6 +10,7 @@
         "babel": "^5.8.38",
         "react": "^19.0.0",
         "react-dom": "^19.0.0",
+        "react-router": "^4.3.1",
         "react-router-dom": "^7.2.0"
     },
     "devDependencies": {

@@ -1,10 +1,13 @@
 import React from 'react';
+import {Approach} from'./Approach';
+import {InputProblem} from './InputProblem'
+import {PracticeProblem} from './PracticeProblem'
 
 function Dashboard() {
   return (
-    <header>
-      <h1>My Web App</h1>
-    </header>
+    <InputProblem/>
+    <Approach/>
+    <PracticeProblem/>
   );
 }
 
