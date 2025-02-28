@@ -91,7 +91,7 @@ For more hands-on experience, check out:
     res.json({
       prompt: userQuery,
       responseStrategy: strategy,
-      practiceProblems: [], // Empty array initially
+      practiceProblems: [], 
     });
   } catch (error) {
     console.error('Error in generateStrategy:', error);
