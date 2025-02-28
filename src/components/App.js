@@ -1,16 +1,26 @@
 import React from 'react';
-import Header from './Header';
-import Main from './Main';
-import Footer from './Footer';
+import Dashboard from './Dashboard';
+import LandingPage from './LandingPage';
+import InputProblem from './InputProblem';
+import Approach from './Approach';
 import '../App.css';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 function App() {
   return (
-    <div className="App">
-      <Header />
-      <Main />
-      <Footer />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" exact element ={<LandingPage />} />
+        <Route path="/dashboard" exact element ={<Dashboard />} />
+      </Routes>
+    </BrowserRouter>
+
+    // <div className="App">
+    //   <Header />
+    //   <LandingPage />
+    //   <Footer />
+    // </div>
+
   );
 }
 

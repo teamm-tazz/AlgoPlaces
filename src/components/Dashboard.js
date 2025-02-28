@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Header() {
+function Dashboard() {
   return (
     <header>
       <h1>My Web App</h1>
@@ -8,4 +8,4 @@ function Header() {
   );
 }
 
-export default Header;
+export default Dashboard;
