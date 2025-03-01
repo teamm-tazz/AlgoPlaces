@@ -1,10 +1,26 @@
 import React from 'react';
 
-function PracticeProblem(){
+function PracticeProblem({practiceProblems}){
+    console.log('practiceProblems in PracticeProblems', practiceProblems);
+return (
 
-    <div>
-        <h1>Practice Probssssss</h1>
-    </div>
+<div>
+
+<ul>
+
+<h2>Practice Problems</h2>
+
+{practiceProblems.map((problem, index) => (
+<li key={index}>{problem.problem}</li>
+
+))}
+
+
+</ul>
+
+</div>
+)
+
 }
 
 export default PracticeProblem

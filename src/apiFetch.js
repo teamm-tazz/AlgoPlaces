@@ -1,5 +1,6 @@
 const apiFetch = {};
 apiFetch.requestStrategy = async (query) => {
+  console.log('Making query in apiFetch.requestStrategy: ', query);
   try {
     console.log('Making query in apiFetch.requestStrategy: ', query);
     const response = await fetch('http://localhost:3000/api/generate', {
@@ -9,6 +10,7 @@ apiFetch.requestStrategy = async (query) => {
       },
       body: JSON.stringify({ userQuery: query }),
     });
+
     if (!response.ok) {
       throw new Error(
         'Error in generating approach response: ',
@@ -22,6 +24,8 @@ apiFetch.requestStrategy = async (query) => {
     console.error(`This is the error in apiFetch.requestStrategy : ${err}`);
   }
 };
+
+
 apiFetch.requestPracticeProblems = async (query) => {
   try {
     const response = await fetch(
@@ -51,6 +55,8 @@ apiFetch.requestPracticeProblems = async (query) => {
     );
   }
 };
+
+
 apiFetch.getHistory = async (obj) => {
   try {
     const response = await fetch('http://localhost3000/api/PLACEHOLDER', {
