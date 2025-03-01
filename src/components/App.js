@@ -2,7 +2,7 @@ import React from 'react';
 import Dashboard from './Dashboard';
 import LandingPage from './LandingPage';
 import InputProblem from './InputProblem';
-import Approach from './Approach';
+import Strategy from './Strategy';
 import '../App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 

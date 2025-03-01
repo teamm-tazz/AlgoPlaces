@@ -5,6 +5,7 @@ import apiRoutes from './routes/apiRoutes.js';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import path from 'path';
+import cors from 'cors'
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -14,6 +15,7 @@ const port = 3000;
 
 app.use(bodyParser.json());
 app.use('/api', apiRoutes);
+app.use((cors));
 
 // Global Error Handler
 app.use((err, req, res, next) => {
