@@ -1,12 +1,11 @@
 import React from 'react';
 //grab the object
 
-function InputProblem({inputProblem}) {
+function InputProblem({ inputProblem }) {
   return (
     <div>
       <p>{inputProblem}</p>
     </div>
-
   );
 }
 

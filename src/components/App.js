@@ -10,10 +10,16 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element ={<LandingPage />} />
-        <Route path="/dashboard" element ={<Dashboard />} />
+        <Route path='/' exact element={<LandingPage />} />
+        <Route path='/dashboard' exact element={<Dashboard />} />
       </Routes>
     </BrowserRouter>
+
+    // <div className="App">
+    //   <Header />
+    //   <LandingPage />
+    //   <Footer />
+    // </div>
   );
 }
 
