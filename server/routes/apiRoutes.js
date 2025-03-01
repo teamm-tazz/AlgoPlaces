@@ -1,9 +1,9 @@
-const express = require('express');
-const {
+import express from 'express';
+import {
   generateStrategy,
   generatePracticeProblems,
-} = require('../controllers/openaiController');
-const parseUserQuery = require('../controllers/parseUserQuery');
+} from '../controllers/openaiController.js';
+import { parseUserQuery } from '../controllers/parseUserQuery.js';
 
 const router = express.Router();
 
@@ -29,4 +29,4 @@ router.post('/practice-problems', parseUserQuery, async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

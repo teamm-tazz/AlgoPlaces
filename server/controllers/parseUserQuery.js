@@ -1,12 +1,17 @@
-const parseUserQuery = (req, res, next) => {
-  const { userQuery } = req.body;
+const parseUserQuery = async (req, res, next) => {
+  try {
+    const { userQuery } = req.body;
 
-  if (typeof userQuery !== 'string') {
-    return res.status(400).json({ error: 'userQuery must be a string' });
+    if (!userQuery) {
+      return res.status(400).json({ error: 'User query is required' });
+    }
+
+    res.locals.userQuery = userQuery;
+    next();
+  } catch (error) {
+    console.error('Error in parseUserQuery:', error);
+    next(error);
   }
-
-  res.locals.userQuery = userQuery;
-  next();
 };
 
-module.exports = parseUserQuery;
+export { parseUserQuery };
