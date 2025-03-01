@@ -1,10 +1,10 @@
 import React from 'react';
 
-function InputProblem() {
+function InputProblem({ inputProblem }) {
   return (
-    <footer>
-      <p>&copy; 2023 My Web App</p>
-    </footer>
+    <div>
+      <p>{inputProblem}</p>
+    </div>
   );
 }
 

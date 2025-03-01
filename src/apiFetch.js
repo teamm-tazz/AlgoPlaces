@@ -1,14 +1,13 @@
 const apiFetch = {};
 apiFetch.requestStrategy = async (query) => {
   try {
+    console.log('Making query in apiFetch.requestStrategy: ', query);
     const response = await fetch('http://localhost:3000/api/generate', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        query,
-      }),
+      body: JSON.stringify({ userQuery: query }),
     });
     if (!response.ok) {
       throw new Error(
@@ -20,7 +19,7 @@ apiFetch.requestStrategy = async (query) => {
     console.log('Here is the generated approach response: ', data);
     return data;
   } catch (err) {
-    console.error(`This is the error in apiFetch.sendQuery : ${err}`);
+    console.error(`This is the error in apiFetch.requestStrategy : ${err}`);
   }
 };
 apiFetch.requestPracticeProblems = async (query) => {
@@ -33,7 +32,7 @@ apiFetch.requestPracticeProblems = async (query) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          query,
+          userQuery: query,
         }),
       }
     );
@@ -73,3 +72,5 @@ apiFetch.getHistory = async (obj) => {
     console.error(`This is the error in apiFetch.getHistory`);
   }
 };
+
+export default apiFetch;

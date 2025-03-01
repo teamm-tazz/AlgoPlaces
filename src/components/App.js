@@ -2,7 +2,7 @@ import React from 'react';
 import Dashboard from './Dashboard';
 import LandingPage from './LandingPage';
 import InputProblem from './InputProblem';
-import Approach from './Approach';
+import Strategy from './Strategy';
 import '../App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
@@ -10,8 +10,8 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" exact element ={<LandingPage />} />
-        <Route path="/dashboard" exact element ={<Dashboard />} />
+        <Route path='/' exact element={<LandingPage />} />
+        <Route path='/dashboard' exact element={<Dashboard />} />
       </Routes>
     </BrowserRouter>
 
@@ -20,7 +20,6 @@ function App() {
     //   <LandingPage />
     //   <Footer />
     // </div>
-
   );
 }
 

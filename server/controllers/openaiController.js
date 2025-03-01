@@ -119,14 +119,13 @@ const generatePracticeProblems = async (req, res, next) => {
         },
         {
           role: 'user',
-          content: `Generate 10 practice problems related to: ${userQuery}. Please make sure that the generated problems are NOT the same problem as the original user inputted problem, but utilizes the same techniques and similar logic. Don't ever give the answer or any other kind of explaination like why its similar to the original problem. I trust that the generated problems will be helpful for the user to practice and build their understanding of the strategy.
+          content: `Generate 10 practice problems that contain similar concepts as: ${userQuery}. Please make sure that the generated problems are NOT the same problem as the original user inputted problem, but utilizes the same techniques and similar logic. Don't ever give the answer or any other kind of explanation like why its similar to the original problem. I trust that the generated problems will be helpful for the user to practice and build their understanding of the strategy.
           
           Format the response as follows:
           Problem 1: <problem>
-          Probability: <probability>
           
           Problem 2: <problem>
-          Probability: <probability>
+         
           
           ...`,
         },

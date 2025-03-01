@@ -1,10 +1,10 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
+import cors from 'cors'; // Import cors
 import apiRoutes from './routes/apiRoutes.js';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
-import path from 'path';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -12,6 +12,7 @@ const __dirname = dirname(__filename);
 const app = express();
 const port = 3000;
 
+app.use(cors()); // Use cors middleware
 app.use(bodyParser.json());
 app.use('/api', apiRoutes);
 
