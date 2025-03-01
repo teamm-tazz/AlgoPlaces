@@ -32,7 +32,7 @@ apiFetch.requestPracticeProblems = async (query) => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          query,
+          userQuery: query,
         }),
       }
     );

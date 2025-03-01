@@ -12,8 +12,10 @@ function Dashboard() {
   const location = useLocation();
   //extract userWQuery var sent to /dashboard from the landing page
   const { userQuery } = location.state;
+  const [history, setHistory] = useState(Object);
   const [strategy, setStrategy] = useState('');
   const [probability, setProbability] = useState('');
+  const [practiceProblems, setPracticeProblems] = useState('');
   console.log(
     'This is the query sent to us from da landing page:  ',
     userQuery
@@ -25,15 +27,31 @@ function Dashboard() {
       const result = await apiFetch.requestStrategy(userQuery);
       // const result = response.json();
       console.log('generated strategy:', result.responseStrategy);
+      setHistory(result);
       setStrategy(result.responseStrategy);
       setProbability(result.probability);
     } catch (error) {
       console.error('Error in getStrategy:', error);
     }
   };
+
+  const getPracticeProblems = async () => {
+    try {
+      const result = await apiFetch.requestPracticeProblems(userQuery);
+      console.log('generated practice problems: ', result);
+      setPracticeProblems(result.practiceProblems);
+    } catch (err) {
+      console.error(`This is the error in getPracticeProblems: ${err}`);
+    }
+  };
+
   useEffect(() => {
     getStrategy();
-  }, []);
+  }, [userQuery]);
+
+  useEffect(() => {
+    getPracticeProblems();
+  }, [strategy]);
 
   return (
     <div>
