@@ -1,8 +1,13 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
-const apiRoutes = require('./routes/apiRoutes');
-const path = require('path');
+import express from 'express';
+import bodyParser from 'body-parser';
+import mongoose from 'mongoose';
+import apiRoutes from './routes/apiRoutes.js';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+import path from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const app = express();
 const port = 3000;
@@ -10,7 +15,7 @@ const port = 3000;
 app.use(bodyParser.json());
 app.use('/api', apiRoutes);
 
-/// Global Error Handler
+// Global Error Handler
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send('There was an error processing the request!');
