@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const practiceProblemSchema = new mongoose.Schema({
   problem: {
@@ -27,4 +27,6 @@ const userProgressSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model('UserProgress', userProgressSchema);
+const UserProgress = mongoose.model('UserProgress', userProgressSchema);
+
+export default UserProgress;

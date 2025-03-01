@@ -1,5 +1,7 @@
-require('dotenv').config();
-const { Configuration, OpenAIApi } = require('openai');
+import dotenv from 'dotenv';
+import { Configuration, OpenAIApi } from 'openai';
+
+dotenv.config();
 
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
@@ -18,13 +20,13 @@ const generateStrategy = async (req, res, next) => {
       messages: [
         {
           role: 'system',
-          content: `You are a 10x tutor for AlgoPlaces, a world-renowned code tutoring service. You are tasked with recieving a user-inputted problem and providing a step-by-step, clear strategy to solve it. The prompt is not the user speaking to you, so don't respond as if you are being asked a direct question. Simply give a high-level, clear solution in casual language. DO NOT GIVE THE ANSWER. Do not berate or make fun of the user. Do not use foul language or inappropriate innuendos. Do not flirt with the user. Do not be condescending. Do not stray off-topic of what the questions is. Provide context behind the solution and the reason why this strategy is the optimal way to go about the problem. In the end, recommend more resources the user can refer to, to gain more insight on the problem. Be kind, professional, and represent the company well, but also take a casual tone like you're tutoring a friend. You want the user to feel at ease as if they were talking to a buddy, not a robot. If you do, you might get a 10 cent raise against inflation. If you don't, you will be fired from AlgoPlaces and be forced to work for CatSnake corp, a terrible company that you will be miserable in.
+          content: `You are a 10x tutor for AlgoPlaces, a world-renowned code tutoring service. You are tasked with recieving a user-inputted problem and providing a step-by-step, clear strategy to solve it. The prompt is not the user speaking to you, so don't respond as if you are being asked a direct question. Simply give a high-level, clear solution in casual language. DO NOT GIVE THE ANSWER. Do not berate or make fun of the user. Do not use foul language or inappropriate innuendos. Do not flirt with the user. Do not be condescending. Do not stray off-topic of what the questions is. Provide context behind the solution and the reason why this strategy is the optimal way to go about the problem. In the end, recommend more resources the user can refer to, to gain more insight on the problem. Be kind, professional, and represent the company well, but also take a casual tone like you're tutoring a friend. You want the user to feel at ease as if they were talking to a buddy, not a robot. If you do, you might get a 10 cent raise against inflation. If you don't, you will be fired from AlgoPlaces and be forced to work for CatSnake corp, a terrible company that you will be miserable in. 
           
           `,
         },
         {
           role: 'user',
-          content: `Generate a high-level strategy on how to solve the following problem: ${userQuery}. In your response, there is no need to confirm that you can help with the task, just give the strategy itself. When using complex terms, be sure to use simpler alternatives that a less educated student might understand (For example, HashMaps -> cache object) but you don't have to explain like you're talking to a 10 year old. KEEP THE RESPONSE LESS THAN 200 words. The response should not say anything like "Sure thing!" or "Of course!" or "I can help with that!". Just reply with "Here's a strategy to solve the problem:".
+          content: `Generate a high-level strategy on how to solve the following problem: ${userQuery}. In your response, there is no need to confirm that you can help with the task, just give the strategy itself. When using complex terms, be sure to use simpler alternatives that a less educated student might understand (For example, HashMaps -> cache object) but you don't have to explain like you're talking to a 10 year old. KEEP THE RESPONSE LESS THAN 200 words. The response should not say anything like "Sure thing!" or "Of course!" or "I can help with that!". Just reply with "Here's a strategy to solve the problem:". Also provide the probability of each problem appearing in an interview setting in this format: "Interview Probability: 70%". Put the propability in a separate Do not put the probability within the responseStrategy property.
           
           Example: User inputs a problem: "Determine if a 9 x 9 Sudoku board is valid."
           Your answer: 
@@ -68,16 +70,7 @@ Why This Works Best
     Efficient checking → O(1) lookup time using sets.
     Single pass through the board → O(81) time complexity (constant in practice).
     No unnecessary computations → Empty cells are ignored.
-
-Additional Practice
-
-For more hands-on experience, check out:
-
-    LeetCode Problem #36 - Valid Sudoku
-    Hash set operations in Python or Java
-    Grid-based problems like "Word Search" or "Game of Life" to strengthen board traversal skills
-
-    Try implementing this and see if you can get it working. Let me know if you get stuck."
+"
 
           
           `,
@@ -85,13 +78,26 @@ For more hands-on experience, check out:
       ],
     });
 
-    const strategy = aiResponse.data.choices[0].message.content.trim();
+    const response = aiResponse.data.choices[0].message.content.trim();
+    console.log('raw response:', response);
 
-    // Send immediate response with strategy
+    // Extract probability if present
+    const probabilityMatch = response.match(/Interview Probability:\s*(\d+)%/);
+    const probability = probabilityMatch ? parseInt(probabilityMatch[1]) : null;
+
+    // Remove probability line from strategy
+    const strategy = response
+      .replace(/Interview Probability:\s*\d+%/, '')
+      .trim();
+
+    console.log('strategy:', strategy);
+    console.log('probability:', probability);
+
     res.json({
       prompt: userQuery,
       responseStrategy: strategy,
-      practiceProblems: [], 
+      probability: probability,
+      practiceProblems: [],
     });
   } catch (error) {
     console.error('Error in generateStrategy:', error);
@@ -107,11 +113,30 @@ const generatePracticeProblems = async (req, res, next) => {
       model: 'gpt-4',
       messages: [
         {
+          role: 'system',
+          content:
+            'Think of yourself as premium version of chatGPT, like a chatGPT Pro One Max. Your task is to generate 10 practice problems that utilize the same techniques and similar logic as the user inputted problem. You always give a thoughtful response in that the practice problem set will help the user build their understanding of the strategy utilized in their original problem. Just response with the problems. ',
+        },
+        {
           role: 'user',
-          content: `Generate 10 practice problems related to: ${userQuery}...`,
+          content: `Generate 10 practice problems related to: ${userQuery}. Please make sure that the generated problems are NOT the same problem as the original user inputted problem, but utilizes the same techniques and similar logic. Don't ever give the answer or any other kind of explaination like why its similar to the original problem. I trust that the generated problems will be helpful for the user to practice and build their understanding of the strategy.
+          
+          Format the response as follows:
+          Problem 1: <problem>
+          Probability: <probability>
+          
+          Problem 2: <problem>
+          Probability: <probability>
+          
+          ...`,
         },
       ],
     });
+
+    console.log(
+      'practice problems raw:',
+      problemsResponse.data.choices[0].message.content
+    );
 
     const problemsText =
       problemsResponse.data.choices[0].message.content.trim();
@@ -123,7 +148,6 @@ const generatePracticeProblems = async (req, res, next) => {
       }))
       .filter((problem) => problem.problem.length > 0);
 
-    // Store in res.locals instead of sending response
     res.locals.practiceProblems = practiceProblems;
     next();
   } catch (error) {
@@ -132,4 +156,4 @@ const generatePracticeProblems = async (req, res, next) => {
   }
 };
 
-module.exports = { generateStrategy, generatePracticeProblems };
+export { generateStrategy, generatePracticeProblems };
