@@ -5,7 +5,6 @@ apiFetch.requestStrategy = async (query) => {
     console.log('Making query in apiFetch.requestStrategy: ', query);
     const response = await fetch('http://localhost:3000/api/generate', {
       method: 'POST',
-      mode: 'no-cors',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -80,8 +79,4 @@ apiFetch.getHistory = async (obj) => {
   }
 };
 
-<<<<<<< HEAD
-export default apiFetch
-=======
 export default apiFetch;
->>>>>>> dev

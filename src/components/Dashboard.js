@@ -15,7 +15,7 @@ function Dashboard() {
   const [history, setHistory] = useState(Object);
   const [strategy, setStrategy] = useState('');
   const [probability, setProbability] = useState('');
-  const [practiceProblems, setPracticeProblems] = useState('');
+  const [practiceProblems, setPracticeProblems] = useState([]);
   console.log(
     'This is the query sent to us from da landing page:  ',
     userQuery
@@ -26,6 +26,7 @@ function Dashboard() {
     try {
       const result = await apiFetch.requestStrategy(userQuery);
       // const result = response.json();
+      console.log('result', result);
       console.log('generated strategy:', result.responseStrategy);
       setHistory(result);
       setStrategy(result.responseStrategy);
@@ -39,7 +40,7 @@ function Dashboard() {
     try {
       const result = await apiFetch.requestPracticeProblems(userQuery);
       console.log('generated practice problems: ', result);
-      setPracticeProblems(result.practiceProblems);
+      setPracticeProblems(result);
     } catch (err) {
       console.error(`This is the error in getPracticeProblems: ${err}`);
     }
@@ -53,23 +54,18 @@ function Dashboard() {
     getPracticeProblems();
   }, [strategy]);
 
+  useEffect(() => {
+    console.log('practiceProblems state:', practiceProblems)
+  }, [practiceProblems]);
+
   return (
     <div>
       <h1>Dashboard</h1>
       <InputProblem inputProblem={userQuery} />
       <Strategy strategy={strategy} probability={probability} />
+      <PracticeProblem practiceProblems={practiceProblems}/>
     </div>
   );
 }
 
 export default Dashboard;
-<<<<<<< HEAD
-
-
-//useState for practice problems
-//two useEffects
-  //one runs every time the query changes to fetch the approach, avoids an infninte loop bc strategy is being updated with the api call
-
-  //the other one runs when the strategy is set, so it's forced to wait for the first useeffect
-=======
->>>>>>> dev
