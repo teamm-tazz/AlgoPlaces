@@ -8,18 +8,14 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path='/' exact element={<LandingPage />} />
-        <Route path='/dashboard' exact element={<Dashboard />} />
-      </Routes>
-    </BrowserRouter>
-
-    // <div className="App">
-    //   <Header />
-    //   <LandingPage />
-    //   <Footer />
-    // </div>
+    <div className='min-h-screen bg-[#C2C8C5]'>
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' exact element={<LandingPage />} />
+          <Route path='/dashboard' exact element={<Dashboard />} />
+        </Routes>
+      </BrowserRouter>
+    </div>
   );
 }
 
