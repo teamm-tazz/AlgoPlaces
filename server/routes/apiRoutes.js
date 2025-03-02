@@ -10,7 +10,6 @@ const router = express.Router();
 // Generate initial strategy
 router.post('/generate', parseUserQuery, async (req, res) => {
   try {
-    console.log('I am here');
     await generateStrategy(req, res, () => {});
     res.json(res.locals.generatedResponse);
   } catch (error) {
