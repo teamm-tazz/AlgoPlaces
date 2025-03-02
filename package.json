@@ -16,18 +16,21 @@
     "openai": "^3.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-loader-spinner": "^6.1.6",
     "react-router-dom": "^6.21.0"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.1.0",
     "@babel/preset-react": "^7.0.0",
+    "autoprefixer": "^10.4.20",
     "babel-loader": "^8.2.2",
     "css-loader": "^5.2.4",
     "html-webpack-plugin": "^5.6.3",
     "nodemon": "^2.0.22",
+    "postcss": "^8.5.3",
     "postcss-loader": "^4.2.0",
     "style-loader": "^2.0.0",
-    "tailwindcss": "^2.1.2",
+    "tailwindcss": "^2.2.19",
     "webpack": "^5.36.2",
     "webpack-cli": "^4.6.0",
     "webpack-dev-server": "^3.11.2"

@@ -17,6 +17,7 @@ apiFetch.requestStrategy = async (query) => {
         response.status
       );
     }
+    console.log('response strategy before parsing: ', response);
     const data = await response.json();
     console.log('Here is the generated approach response: ', data);
     return data;
@@ -24,7 +25,6 @@ apiFetch.requestStrategy = async (query) => {
     console.error(`This is the error in apiFetch.requestStrategy : ${err}`);
   }
 };
-
 
 apiFetch.requestPracticeProblems = async (query) => {
   try {
@@ -55,7 +55,6 @@ apiFetch.requestPracticeProblems = async (query) => {
     );
   }
 };
-
 
 apiFetch.getHistory = async (obj) => {
   try {
