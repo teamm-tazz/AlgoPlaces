@@ -80,7 +80,7 @@ apiFetch.getHistory = async (obj) => {
 
 apiFetch.storeHistoryObj = async (obj) => {
   try{
-    console.log('obj in storeHisotryObj apiFetch', obj);
+    console.log('obj in storeHistoryObj apiFetch', obj);
     const response = await fetch('http://localhost:3000/api/storeHistory', {
         method: 'POST',
         headers: {

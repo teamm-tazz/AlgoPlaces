@@ -4,8 +4,8 @@ import {
   generateStrategy,
   generatePracticeProblems,
 } from '../controllers/openaiController.js';
-import { parseUserQuery, storeHistory } from '../controllers/parseUserQuery.js';
-
+import { parseUserQuery} from '../controllers/parseUserQuery.js';
+import { storeHistory} from '../controllers/historyController.js';
 
 const router = express.Router();
 

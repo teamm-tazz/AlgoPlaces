@@ -27,7 +27,7 @@ const userProgressSchema = new mongoose.Schema({
   },
   probability: {
     type: String,
-    required: true;
+    required: true
   }
 });
 
