@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import PracticeProblem from './PracticeProblem';
 import Strategy from './Strategy';
+import History from './History';
 import InputProblem from './InputProblem';
 import apiFetch from '../apiFetch';
 
@@ -19,6 +20,12 @@ function Dashboard() {
     probability: 0,
     practiceProblems: []
 
+  });
+  const [completeObj, setCompleteObj] = useState({
+    prompt: '',
+    responseStrategy: '',
+    probability: 0,
+    practiceProblems: []
   });
 
   console.log('This is the query sent to us from da landing page: ', userQuery);
@@ -57,6 +64,7 @@ function Dashboard() {
         ...prev,
         practiceProblems: result
       }))
+
       // console.log("Here's the history object from the SECOND API call, should include practice probs: ", history)
     } catch (err) {
       console.error(`This is the error in getPracticeProblems: ${err}`);
@@ -64,6 +72,16 @@ function Dashboard() {
       setLoading(false);
     }
   };
+
+  const storeHistory = async () => {
+    try{
+      console.log('entryObj to store in DB', Array.isArray(entryObj));
+      const response = await apiFetch.storeHistoryObj(entryObj);
+    }
+    catch (err){
+      console.error(`This is the error in storingHistory: ${err}`);
+    }
+  }
 
   useEffect(() => {
     getStrategy();
@@ -82,7 +100,10 @@ function Dashboard() {
   //check updatedHistory
   useEffect(() => {
     console.log('history updated: ', entryObj)
-  })
+    storeHistory(entryObj);
+  }, [entryObj]);
+
+
 
   return (
     <div className='p-4 min-h-screen'>
@@ -102,6 +123,11 @@ function Dashboard() {
             setPracticeProblems={setPracticeProblems}
             loading={loading}
             setEntryObj={setEntryObj}
+            entryObj={entryObj}
+          />
+        </div>
+        <div className='col-span-1'>
+          <History
             entryObj={entryObj}
           />
         </div>
