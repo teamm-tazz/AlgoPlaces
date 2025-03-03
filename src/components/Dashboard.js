@@ -12,7 +12,7 @@ function Dashboard() {
   const [probability, setProbability] = useState('');
   const [practiceProblems, setPracticeProblems] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [history, setHistory] = useState({
+  const [entryObj, setEntryObj] = useState({
     //set history obj with query info to the response obj the server is sending back
     prompt: '',
     responseStrategy: '',
@@ -33,7 +33,7 @@ function Dashboard() {
       setStrategy(result.responseStrategy);
       setProbability(result.probability);
       //use a functional state update to update the history object
-      setHistory((prev) => ({
+      setEntryObj((prev) => ({
         ...prev,
         prompt: result.prompt,
         responseStrategy: result.responseStrategy,
@@ -53,7 +53,7 @@ function Dashboard() {
       const result = await apiFetch.requestPracticeProblems(userQuery);
       console.log('generated practice problems: ', result);
       setPracticeProblems(result);
-      setHistory((prev) => ({
+      setEntryObj((prev) => ({
         ...prev,
         practiceProblems: result
       }))
@@ -81,7 +81,7 @@ function Dashboard() {
 
   //check updatedHistory
   useEffect(() => {
-    console.log('history updated: ', history)
+    console.log('history updated: ', entryObj)
   })
 
   return (
@@ -99,7 +99,10 @@ function Dashboard() {
         <div className='col-span-1'>
           <PracticeProblem
             practiceProblems={practiceProblems}
+            setPracticeProblems={setPracticeProblems}
             loading={loading}
+            setEntryObj={setEntryObj}
+            entryObj={entryObj}
           />
         </div>
       </div>
