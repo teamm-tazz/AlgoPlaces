@@ -96,10 +96,10 @@ function Dashboard() {
   useEffect(() => { //stores history object in database when ready
     console.log('history updated: ', entryObj)
     if(historyObjIsComplete){ //condition to check before calling the fetch function
+      setHistoryObj(false);
       storeHistory(entryObj);
     }
   }, [entryObj]);
-
 
 
   return (
@@ -125,7 +125,7 @@ function Dashboard() {
         </div>
         <div className='col-span-1'>
           <History
-            entryObj={entryObj}
+            loading={loading}
           />
         </div>
       </div>
