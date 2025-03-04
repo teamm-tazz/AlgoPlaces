@@ -24,7 +24,7 @@ app.use((err, req, res, next) => {
 });
 
 mongoose
-  .connect('mongodb://localhost:27017/algoPlaceDataBase', {
+  .connect('mongodb+srv://team:Algoplaces1@cluster0.ib3uz.mongodb.net/algoPlaceDataBase?retryWrites=true&w=majority&appName=Cluster0', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
@@ -35,6 +35,17 @@ mongoose
     console.error('MongoDB connection error:', err);
   });
 
+  // mongoose
+  // .connect('mongodb://localhost:27017/algoPlaceDataBase', {
+  //   useNewUrlParser: true,
+  //   useUnifiedTopology: true,
+  // })
+  // .then(() => {
+  //   console.log('MongoDB connected successfully');
+  // })
+  // .catch((err) => {
+  //   console.error('MongoDB connection error:', err);
+  // });
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
