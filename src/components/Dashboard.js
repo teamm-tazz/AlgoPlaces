@@ -28,6 +28,7 @@ function Dashboard() {
 
   const getStrategy = async () => {
     setLoading(true);
+    
     try {
       const result = await apiFetch.requestStrategy(userQuery);
       console.log('result', result);
