@@ -7,18 +7,19 @@ import apiFetch from '../apiFetch';
 
 function Dashboard() {
   const location = useLocation();
+  const [loading, setLoading] = useState(false);
   const { userQuery } = location.state;
+  const [title, setTitle] = useState('');
   const [strategy, setStrategy] = useState('');
   const [probability, setProbability] = useState('');
   const [practiceProblems, setPracticeProblems] = useState([]);
-  const [loading, setLoading] = useState(false);
   const [entryObj, setEntryObj] = useState({
     //set history obj with query info to the response obj the server is sending back
+    title: '',
     prompt: '',
     responseStrategy: '',
     probability: 0,
-    practiceProblems: []
-
+    practiceProblems: [],
   });
 
   console.log('This is the query sent to us from da landing page: ', userQuery);
@@ -30,15 +31,17 @@ function Dashboard() {
       console.log('result', result);
       console.log('generated strategy:', result.responseStrategy);
       //setHistory(result);
+      setTitle(result.title);
       setStrategy(result.responseStrategy);
       setProbability(result.probability);
       //use a functional state update to update the history object
       setEntryObj((prev) => ({
         ...prev,
+        title: result.title,
         prompt: result.prompt,
         responseStrategy: result.responseStrategy,
-        probability: result.probability
-      }))
+        probability: result.probability,
+      }));
       // console.log("Here's the history object from the first API call: ", history)
     } catch (error) {
       console.error('Error in getStrategy:', error);
@@ -55,8 +58,8 @@ function Dashboard() {
       setPracticeProblems(result);
       setEntryObj((prev) => ({
         ...prev,
-        practiceProblems: result
-      }))
+        practiceProblems: result,
+      }));
       // console.log("Here's the history object from the SECOND API call, should include practice probs: ", history)
     } catch (err) {
       console.error(`This is the error in getPracticeProblems: ${err}`);
@@ -81,15 +84,18 @@ function Dashboard() {
 
   //check updatedHistory
   useEffect(() => {
-    console.log('history updated: ', entryObj)
-  })
+    console.log('entryObj updated: ', entryObj);
+    console.log('practiceProblems updated: ', practiceProblems);
+    console.log('strategy updated: ', strategy);
+    console.log('title updated:', title);
+  });
 
   return (
     <div className='p-4 min-h-screen'>
       <h1 className='text-2xl font-bold mb-4'>AlgoPlaces</h1>
       <div className='grid grid-cols-2 gap-4 transition-opacity duration-500 opacity-100'>
         <div className='col-span-1'>
-          <InputProblem inputProblem={userQuery} />
+          <InputProblem inputProblem={userQuery} title={title} />
           <Strategy
             strategy={strategy}
             probability={probability}
