@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import PracticeProblem from './PracticeProblem';
 import Strategy from './Strategy';
+import History from './History';
 import InputProblem from './InputProblem';
 import apiFetch from '../apiFetch';
 
@@ -20,6 +21,7 @@ function Dashboard() {
     practiceProblems: []
 
   });
+  const [historyObjIsComplete, setHistoryObj ] = useState(false);
 
   console.log('This is the query sent to us from da landing page: ', userQuery);
 
@@ -57,6 +59,7 @@ function Dashboard() {
         ...prev,
         practiceProblems: result
       }))
+      setHistoryObj(true);
       // console.log("Here's the history object from the SECOND API call, should include practice probs: ", history)
     } catch (err) {
       console.error(`This is the error in getPracticeProblems: ${err}`);
@@ -64,6 +67,16 @@ function Dashboard() {
       setLoading(false);
     }
   };
+
+  const storeHistory = async () => { //function that runs once the entry object has all the parameters
+    try{
+      console.log('entryObj to store in DB', entryObj);
+      const response = await apiFetch.storeHistoryObj(entryObj);
+    }
+    catch (err){
+      console.error(`This is the error in storingHistory: ${err}`);
+    }
+  }
 
   useEffect(() => {
     getStrategy();
@@ -79,10 +92,15 @@ function Dashboard() {
     console.log('practiceProblems state:', practiceProblems);
   }, [practiceProblems]);
 
-  //check updatedHistory
-  useEffect(() => {
+
+  useEffect(() => { //stores history object in database when ready
     console.log('history updated: ', entryObj)
-  })
+    if(historyObjIsComplete){ //condition to check before calling the fetch function
+      storeHistory(entryObj);
+    }
+  }, [entryObj]);
+
+
 
   return (
     <div className='p-4 min-h-screen'>
@@ -102,6 +120,11 @@ function Dashboard() {
             setPracticeProblems={setPracticeProblems}
             loading={loading}
             setEntryObj={setEntryObj}
+            entryObj={entryObj}
+          />
+        </div>
+        <div className='col-span-1'>
+          <History
             entryObj={entryObj}
           />
         </div>

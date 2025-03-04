@@ -25,6 +25,10 @@ const userProgressSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  probability: {
+    type: String,
+    required: true
+  }
 });
 
 const UserProgress = mongoose.model('UserProgress', userProgressSchema);
