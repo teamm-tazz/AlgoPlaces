@@ -8,20 +8,21 @@ import apiFetch from '../apiFetch';
 
 function Dashboard() {
   const location = useLocation();
+  const [loading, setLoading] = useState(false);
   const { userQuery } = location.state;
+  const [title, setTitle] = useState('');
   const [strategy, setStrategy] = useState('');
   const [probability, setProbability] = useState('');
   const [practiceProblems, setPracticeProblems] = useState([]);
-  const [loading, setLoading] = useState(false);
   const [entryObj, setEntryObj] = useState({
     //set history obj with query info to the response obj the server is sending back
+    title: '',
     prompt: '',
     responseStrategy: '',
     probability: 0,
-    practiceProblems: []
-
+    practiceProblems: [],
   });
-  const [historyObjIsComplete, setHistoryObj ] = useState(false);
+  const [historyObjIsComplete, setHistoryObj] = useState(false);
 
   console.log('This is the query sent to us from da landing page: ', userQuery);
 
@@ -32,15 +33,17 @@ function Dashboard() {
       console.log('result', result);
       console.log('generated strategy:', result.responseStrategy);
       //setHistory(result);
+      setTitle(result.title);
       setStrategy(result.responseStrategy);
       setProbability(result.probability);
       //use a functional state update to update the history object
       setEntryObj((prev) => ({
         ...prev,
+        title: result.title,
         prompt: result.prompt,
         responseStrategy: result.responseStrategy,
-        probability: result.probability
-      }))
+        probability: result.probability,
+      }));
       // console.log("Here's the history object from the first API call: ", history)
     } catch (error) {
       console.error('Error in getStrategy:', error);
@@ -57,8 +60,8 @@ function Dashboard() {
       setPracticeProblems(result);
       setEntryObj((prev) => ({
         ...prev,
-        practiceProblems: result
-      }))
+        practiceProblems: result,
+      }));
       setHistoryObj(true);
       // console.log("Here's the history object from the SECOND API call, should include practice probs: ", history)
     } catch (err) {
@@ -68,15 +71,15 @@ function Dashboard() {
     }
   };
 
-  const storeHistory = async () => { //function that runs once the entry object has all the parameters
-    try{
+  const storeHistory = async () => {
+    //function that runs once the entry object has all the parameters
+    try {
       console.log('entryObj to store in DB', entryObj);
       const response = await apiFetch.storeHistoryObj(entryObj);
-    }
-    catch (err){
+    } catch (err) {
       console.error(`This is the error in storingHistory: ${err}`);
     }
-  }
+  };
 
   useEffect(() => {
     getStrategy();
@@ -92,22 +95,17 @@ function Dashboard() {
     console.log('practiceProblems state:', practiceProblems);
   }, [practiceProblems]);
 
-
-  useEffect(() => { //stores history object in database when ready
-    console.log('history updated: ', entryObj)
-    if(historyObjIsComplete){ //condition to check before calling the fetch function
-      storeHistory(entryObj);
-    }
-  }, [entryObj]);
-
-
+  //check updatedHistory
+  useEffect(() => {
+    console.log('history updated: ', entryObj);
+  });
 
   return (
     <div className='p-4 min-h-screen'>
       <h1 className='text-2xl font-bold mb-4'>AlgoPlaces</h1>
       <div className='grid grid-cols-2 gap-4 transition-opacity duration-500 opacity-100'>
         <div className='col-span-1'>
-          <InputProblem inputProblem={userQuery} />
+          <InputProblem inputProblem={userQuery} title={title} />
           <Strategy
             strategy={strategy}
             probability={probability}
@@ -124,9 +122,7 @@ function Dashboard() {
           />
         </div>
         <div className='col-span-1'>
-          <History
-            entryObj={entryObj}
-          />
+          <History entryObj={entryObj} />
         </div>
       </div>
     </div>

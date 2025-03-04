@@ -48,7 +48,7 @@ function Strategy({ strategy, probability, loading }) {
         >
           <p className='mb-4'>{strategy}</p>
           <p className='text-l font-bold mb-2'>
-            Interview Probability: {probability}%
+            Interview Probability: {probability}
           </p>
         </div>
       )}
