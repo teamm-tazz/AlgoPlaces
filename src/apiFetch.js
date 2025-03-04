@@ -58,7 +58,7 @@ apiFetch.requestPracticeProblems = async (query) => {
 
 apiFetch.getHistory = async (obj) => {
   try {
-    const response = await fetch('http://localhost3000/api/PLACEHOLDER', {
+    const response = await fetch('http://localhost:3000/api/PLACEHOLDER', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -77,5 +77,26 @@ apiFetch.getHistory = async (obj) => {
     console.error(`This is the error in apiFetch.getHistory`);
   }
 };
+
+apiFetch.storeHistoryObj = async (obj) => {
+  try{
+    console.log('obj in storeHistoryObj apiFetch', obj);
+    const response = await fetch('http://localhost:3000/api/storeHistory', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(obj),
+      });
+
+    if (!response.ok) {
+      throw new Error ('Error in storing user history.');
+    }
+    const data = await response.json();
+    console.log(`Here's the history being stored: ${data}`);
+  } catch (err) {
+    console.error ('This is the error in apiFetch.storeHistory')
+  }
+}
 
 export default apiFetch;

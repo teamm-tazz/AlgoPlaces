@@ -14,4 +14,5 @@ const parseUserQuery = async (req, res, next) => {
   }
 };
 
-export { parseUserQuery };
+
+export { parseUserQuery};

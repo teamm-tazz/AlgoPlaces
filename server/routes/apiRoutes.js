@@ -1,9 +1,11 @@
 import express from 'express';
+//import { storeHistory } from '../controllers/historyController';
 import {
   generateStrategy,
   generatePracticeProblems,
 } from '../controllers/openaiController.js';
-import { parseUserQuery } from '../controllers/parseUserQuery.js';
+import { parseUserQuery} from '../controllers/parseUserQuery.js';
+import { storeHistory} from '../controllers/historyController.js';
 
 const router = express.Router();
 
@@ -28,5 +30,9 @@ router.post('/practice-problems', parseUserQuery, async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+
+// Store history in a separate endpoint
+
+router.post('/storeHistory', storeHistory);
 
 export default router;

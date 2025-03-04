@@ -24,7 +24,7 @@ app.use((err, req, res, next) => {
 });
 
 mongoose
-  .connect('mongodb://localhost:27017/mydatabase', {
+  .connect('mongodb://localhost:27017/algoPlaceDataBase', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
