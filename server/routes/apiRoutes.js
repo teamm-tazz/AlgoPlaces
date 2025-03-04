@@ -5,7 +5,7 @@ import {
   generatePracticeProblems,
 } from '../controllers/openaiController.js';
 import { parseUserQuery} from '../controllers/parseUserQuery.js';
-import { storeHistory} from '../controllers/historyController.js';
+import { storeHistory, getHistory} from '../controllers/historyController.js';
 
 const router = express.Router();
 
@@ -34,5 +34,7 @@ router.post('/practice-problems', parseUserQuery, async (req, res) => {
 // Store history in a separate endpoint
 
 router.post('/storeHistory', storeHistory);
+
+router.get('/getHistory', getHistory);
 
 export default router;

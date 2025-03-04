@@ -95,10 +95,15 @@ function Dashboard() {
     console.log('practiceProblems state:', practiceProblems);
   }, [practiceProblems]);
 
-  //check updatedHistory
-  useEffect(() => {
-    console.log('history updated: ', entryObj);
-  });
+
+  useEffect(() => { //stores history object in database when ready
+    console.log('history updated: ', entryObj)
+    if(historyObjIsComplete){ //condition to check before calling the fetch function
+      setHistoryObj(false);
+      storeHistory(entryObj);
+    }
+  }, [entryObj]);
+
 
   return (
     <div className='p-4 min-h-screen'>
@@ -122,7 +127,9 @@ function Dashboard() {
           />
         </div>
         <div className='col-span-1'>
-          <History entryObj={entryObj} />
+          <History
+            loading={loading}
+          />
         </div>
       </div>
     </div>
