@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import apiFetch from '../apiFetch';
 import { MutatingDots } from 'react-loader-spinner';
 
-function History({ loading }) {
-  const [historyObj, setHistory] = useState([]);
+function History({ loading, setEntryObj}) {
+  const [historyObj, setHistoryObj] = useState([]);
   const [containerLoaded, setContainerLoaded] = useState(false);
   const [contentLoaded, setContentLoaded] = useState(false);
 
@@ -25,7 +25,7 @@ function History({ loading }) {
     try {
       const response = await apiFetch.getHistory();
       console.log('data in getHistoryObject', response);
-      setHistory(response);
+      setHistoryObj(response);
       console.log('historyObj', historyObj);
     } catch (err) {
       console.error(`This is the error in storingHistory: ${err}`);
@@ -36,13 +36,25 @@ function History({ loading }) {
     getHistoryObject();
   }, []);
 
+
+  const handleMatchTitle = async (title) => {
+    try {
+      const response = await apiFetch.matchTitle(title);
+      console.log('Requested entry object from Database:', response)
+      /// confirm with amrita that we are getting back an object in the format of entryOb
+      setEntryObj(response)
+    } catch (err){
+      console.error("This is the error in handleMatchTitle ", err)
+    }
+  }
+
   return (
     <>
       <div
         className={`p-4 mb-4 rounded-lg shadow-lg bg-gradient-to-r from-[#94B0B7] to-[#C2C8C5] break-words transition-opacity duration-500 ${
           containerLoaded ? 'opacity-100' : 'opacity-0'
         }`}
-      ></div>
+      >
 
       <h2 className='text-xl font-bold mb-2'>History</h2>
 
@@ -68,13 +80,14 @@ function History({ loading }) {
 
           <div>
             {historyObj.map((item, index) => (
-              <div key={index}>
-                <ul class='cursor-pointer'>{item.prompt}</ul>
+              <div>
+                <button className='cursor-pointer' onClick={()=>{handleMatchTitle(this.value)}}>{item.title}</button>
               </div>
             ))}
           </div>
         </>
       )}
+      </div>
     </>
   );
 }
