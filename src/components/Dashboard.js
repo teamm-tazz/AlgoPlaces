@@ -22,7 +22,7 @@ function Dashboard() {
     probability: 0,
     practiceProblems: [],
   });
-  const [historyObjIsComplete, setHistoryObj] = useState(false);
+  const [historyObjIsComplete, setHistoryObjIsComplete] = useState(false);
 
   console.log('This is the query sent to us from da landing page: ', userQuery);
 
@@ -63,7 +63,7 @@ function Dashboard() {
         ...prev,
         practiceProblems: result,
       }));
-      setHistoryObj(true);
+      setHistoryObjIsComplete(true);
       // console.log("Here's the history object from the SECOND API call, should include practice probs: ", history)
     } catch (err) {
       console.error(`This is the error in getPracticeProblems: ${err}`);
@@ -101,9 +101,14 @@ function Dashboard() {
     console.log('history updated: ', entryObj);
     if (historyObjIsComplete) {
       //condition to check before calling the fetch function
-      setHistoryObj(false);
+      setHistoryObjIsComplete(false);
       storeHistory(entryObj);
     }
+
+    setTitle(entryObj.title);
+    setStrategy(entryObj.responseStrategy);
+    setProbability(entryObj.probability);
+    setPracticeProblems(entryObj.practiceProblems);
   }, [entryObj]);
 
   return (
@@ -131,7 +136,7 @@ function Dashboard() {
             />
           </div>
           <div className='col-span-1'>
-            <History loading={loading} />
+            <History loading={loading} setEntryObj={setEntryObj} />
           </div>
         </div>
       </div>
