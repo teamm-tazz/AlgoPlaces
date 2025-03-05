@@ -37,6 +37,6 @@ router.post('/storeHistory', storeHistory);
 
 router.get('/getHistory', getHistory);
 
-router.get('/matchTitle', getTitle);
+router.get('/matchTitle/:title', getTitle);
 
 export default router;

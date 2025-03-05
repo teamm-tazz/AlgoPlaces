@@ -94,4 +94,24 @@ apiFetch.getHistory = async () => {
     console.error ('This is the error in apiFetch.getHistoryObject');
   }
 }
+
+apiFetch.matchTitle = async (title) => {
+  try {
+    const response = await fetch(`http://localhost:3000/api/matchTitle/${title}`)
+
+    if (!response.ok){
+      throw new Error ('Error in sending over the title')
+    }
+
+    const data = await response.json();
+    console.log('This the data from backend ', data)
+    return data;
+
+  } catch (err){
+    console.error('This is the error in apiFetch.matchTitle', err)
+
+  }
+
+}
+
 export default apiFetch;
