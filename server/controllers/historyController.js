@@ -40,7 +40,8 @@ const getHistory = async (req, res, next) => {
 
 const getTitle = async (req, res, next) => {
   try {
-    const {title} = req.query;
+    console.log("I am in getTitle");
+    const {title} = req.params;
     console.log('title', title)
     const data = await UserProgress.findOne({title}); //grabs the document from the backend
     console.log('data from mongoose', data);
