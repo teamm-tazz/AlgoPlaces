@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { MutatingDots } from 'react-loader-spinner';
 
-function PracticeProblem({ practiceProblems, loading, setPracticeProblems, setEntryObj, entryObj}) {
+function PracticeProblem({
+  practiceProblems,
+  loading,
+  setPracticeProblems,
+  setEntryObj,
+  entryObj,
+}) {
   // console.log("I am the setpracticeProblems props inside of PracticeProblem component: ", {setPracticeProblems})
   // console.log(`This is practiceProblems inside PracticeProblem component. Am I defined? Hm...: ${JSON.stringify(practiceProblems, null, 2)}`)
   // console.log(`This is the entryObj object inside PracticeProblem component. Am I updating? Hm...... :${JSON.stringify(entryObj, null, 2)}`)
   const [containerLoaded, setContainerLoaded] = useState(false);
   const [contentLoaded, setContentLoaded] = useState(false);
-
 
   /// USE EFFECT For container fade-in on mount
   useEffect(() => {
@@ -29,24 +34,23 @@ function PracticeProblem({ practiceProblems, loading, setPracticeProblems, setEn
     //clickedBox is being identified by its ID, which is the index
     //toggle problem.isCompleted to true (use ! i think no true since we want to able to uncheck)
     //use functional state handler to change state of problem array
-    setPracticeProblems((prev) =>  
-  
-     prev.map((problem, i) => 
-     i === clickedBox ? {...problem, isCompleted: !problem.isCompleted} : problem
+    setPracticeProblems((prev) =>
+      prev.map((problem, i) =>
+        i === clickedBox
+          ? { ...problem, isCompleted: !problem.isCompleted }
+          : problem
       )
-    )
+    );
 
-    
     await setEntryObj((prev) => ({
       ...prev,
-      practiceProblems: prev.practiceProblems.map((problemObj, index) => 
-        index === clickedBox ? {...problemObj, isCompleted: !problemObj.isCompleted} : problemObj
-      )
-    }))
-    
-  }
-
-
+      practiceProblems: prev.practiceProblems.map((problemObj, index) =>
+        index === clickedBox
+          ? { ...problemObj, isCompleted: !problemObj.isCompleted }
+          : problemObj
+      ),
+    }));
+  };
 
   return (
     <div
@@ -74,18 +78,15 @@ function PracticeProblem({ practiceProblems, loading, setPracticeProblems, setEn
           }`}
         >
           {practiceProblems.map((problem, index) => (
-  
             <div>
-            <li key={index}>{problem.problem}</li>
-            {/*//inside, map, assign a checkbox to each problem here*/}
-            <input 
-              type="checkbox"
-              checked={problem.isCompleted}
-              onChange={() => handleCheckmark(index)}
-            />
-        
+              <li key={index}>{problem.problem}</li>
+              {/*//inside, map, assign a checkbox to each problem here*/}
+              <input
+                type='checkbox'
+                checked={problem.isCompleted}
+                onChange={() => handleCheckmark(index)}
+              />
             </div>
-
           ))}
         </ul>
       )}

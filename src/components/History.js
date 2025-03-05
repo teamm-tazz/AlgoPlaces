@@ -2,44 +2,39 @@ import React, { useState, useEffect } from 'react';
 import apiFetch from '../apiFetch';
 import { MutatingDots } from 'react-loader-spinner';
 
-function History ({loading}) {
-
-  const [ historyObj, setHistory ] = useState([]);
+function History({ loading }) {
+  const [historyObj, setHistory] = useState([]);
   const [containerLoaded, setContainerLoaded] = useState(false);
   const [contentLoaded, setContentLoaded] = useState(false);
 
-
   /// USE EFFECT For container fade-in on mount
-    useEffect(() => {
-      setContainerLoaded(true);
-    }, []);
+  useEffect(() => {
+    setContainerLoaded(true);
+  }, []);
 
-    useEffect(() => {
-        if (!loading) {
-          setContentLoaded(false);
-          const timer = setTimeout(() => setContentLoaded(true), 300);
-          return () => clearTimeout(timer);
-        }
-        setContentLoaded(false);
-      }, [loading, historyObj]);
-
+  useEffect(() => {
+    if (!loading) {
+      setContentLoaded(false);
+      const timer = setTimeout(() => setContentLoaded(true), 300);
+      return () => clearTimeout(timer);
+    }
+    setContentLoaded(false);
+  }, [loading, historyObj]);
 
   const getHistoryObject = async () => {
-        try{
-          const response = await apiFetch.getHistory();
-          console.log('data in getHistoryObject', response);
-          setHistory(response);
-          console.log('historyObj', historyObj);
-        }
-        catch (err){
-          console.error(`This is the error in storingHistory: ${err}`);
-        }
+    try {
+      const response = await apiFetch.getHistory();
+      console.log('data in getHistoryObject', response);
+      setHistory(response);
+      console.log('historyObj', historyObj);
+    } catch (err) {
+      console.error(`This is the error in storingHistory: ${err}`);
     }
+  };
 
   useEffect(() => {
     getHistoryObject();
   }, []);
-
 
   return (
     <>
@@ -81,6 +76,6 @@ function History ({loading}) {
         </>
       )}
     </>
-   );
-  }
+  );
+}
 export default History;

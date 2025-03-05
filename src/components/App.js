@@ -8,7 +8,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 function App() {
   return (
-    <div className='min-h-screen bg-[#C2C8C5]'>
+    <div className='min-h-screen bg-gradient-to-b from-[#022839]  to-[#3e3656]'>
       <BrowserRouter>
         <Routes>
           <Route path='/' exact element={<LandingPage />} />
