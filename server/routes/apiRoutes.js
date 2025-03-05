@@ -5,7 +5,7 @@ import {
   generatePracticeProblems,
 } from '../controllers/openaiController.js';
 import { parseUserQuery} from '../controllers/parseUserQuery.js';
-import { storeHistory, getHistory} from '../controllers/historyController.js';
+import { storeHistory, getHistory, getTitle} from '../controllers/historyController.js';
 
 const router = express.Router();
 
@@ -36,5 +36,7 @@ router.post('/practice-problems', parseUserQuery, async (req, res) => {
 router.post('/storeHistory', storeHistory);
 
 router.get('/getHistory', getHistory);
+
+router.get('/matchTitle', getTitle);
 
 export default router;
