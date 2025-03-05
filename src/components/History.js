@@ -38,6 +38,7 @@ function History({ loading, setEntryObj }) {
 
   const handleMatchTitle = async (title) => {
     try {
+      console.log('title in handleMatchTitle', title);
       const response = await apiFetch.matchTitle(title);
       console.log('Requested entry object from Database:', response);
       /// confirm with amrita that we are getting back an object in the format of entryOb
@@ -78,7 +79,7 @@ function History({ loading, setEntryObj }) {
 
             <div>
               {historyObj.map((item, index) => (
-                <div>
+                <div key={index}>
                   <button
                     className='cursor-pointer'
                     onClick={() => {
