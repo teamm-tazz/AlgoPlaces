@@ -28,7 +28,7 @@ function Dashboard() {
 
   const getStrategy = async () => {
     setLoading(true);
-    
+
     try {
       const result = await apiFetch.requestStrategy(userQuery);
       console.log('result', result);
@@ -96,41 +96,43 @@ function Dashboard() {
     console.log('practiceProblems state:', practiceProblems);
   }, [practiceProblems]);
 
-
-  useEffect(() => { //stores history object in database when ready
-    console.log('history updated: ', entryObj)
-    if(historyObjIsComplete){ //condition to check before calling the fetch function
+  useEffect(() => {
+    //stores history object in database when ready
+    console.log('history updated: ', entryObj);
+    if (historyObjIsComplete) {
+      //condition to check before calling the fetch function
       setHistoryObj(false);
       storeHistory(entryObj);
     }
   }, [entryObj]);
 
-
   return (
-    <div className='p-4 min-h-screen'>
-      <h1 className='text-2xl font-bold mb-4'>AlgoPlaces</h1>
-      <div className='grid grid-cols-2 gap-4 transition-opacity duration-500 opacity-100'>
-        <div className='col-span-1'>
-          <InputProblem inputProblem={userQuery} title={title} />
-          <Strategy
-            strategy={strategy}
-            probability={probability}
-            loading={loading}
-          />
-        </div>
-        <div className='col-span-1'>
-          <PracticeProblem
-            practiceProblems={practiceProblems}
-            setPracticeProblems={setPracticeProblems}
-            loading={loading}
-            setEntryObj={setEntryObj}
-            entryObj={entryObj}
-          />
-        </div>
-        <div className='col-span-1'>
-          <History
-            loading={loading}
-          />
+    <div>
+      <h1 className='text-4xl font-bold p-8 bg-[#022839] text-[#C2C8C5]'>
+        AlgoPlaces
+      </h1>
+      <div className='p-4 min-h-screen'>
+        <div className='grid grid-cols-2 gap-4 transition-opacity duration-500 opacity-100'>
+          <div className='col-span-1'>
+            <InputProblem inputProblem={userQuery} title={title} />
+            <Strategy
+              strategy={strategy}
+              probability={probability}
+              loading={loading}
+            />
+          </div>
+          <div className='col-span-1'>
+            <PracticeProblem
+              practiceProblems={practiceProblems}
+              setPracticeProblems={setPracticeProblems}
+              loading={loading}
+              setEntryObj={setEntryObj}
+              entryObj={entryObj}
+            />
+          </div>
+          <div className='col-span-1'>
+            <History loading={loading} />
+          </div>
         </div>
       </div>
     </div>
