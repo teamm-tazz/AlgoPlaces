@@ -74,7 +74,7 @@ function History ({loading}) {
           <div>
             {historyObj.map((item, index) => (
               <div key={index} >
-                <ul class="cursor-pointer">{item.prompt}</ul>
+                <ul class="cursor-pointer">{item.title}</ul>
               </div>
             ))}
           </div>

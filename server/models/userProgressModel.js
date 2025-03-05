@@ -12,6 +12,10 @@ const practiceProblemSchema = new mongoose.Schema({
 });
 
 const userProgressSchema = new mongoose.Schema({
+  title: {
+    type: String,
+    required: true,
+  },
   prompt: {
     type: String,
     required: true,
