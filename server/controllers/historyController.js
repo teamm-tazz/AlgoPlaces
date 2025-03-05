@@ -42,12 +42,12 @@ const getTitle = async (req, res, next) => {
   try {
     const {title} = req.query;
     console.log('title', title)
-    const data = await UserProgress.findOne({title}); //grabs all the documents from the backend
+    const data = await UserProgress.findOne({title}); //grabs the document from the backend
     console.log('data from mongoose', data);
     res.locals.titleData = data;
     return res.status(200).json(res.locals.titleData);
   } catch (error) {
-    console.error('Error in getHistory:', error);
+    console.error('Error in getTitle:', error);
     next(error);
   }
 };
