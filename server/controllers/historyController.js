@@ -2,14 +2,24 @@ import UserProgress from '../models/userProgressModel.js';
 
 const storeHistory = async (req, res, next) => {
   try {
-    const {prompt, responseStrategy, practiceProblems, probability } = req.body;
-    if (!prompt || !responseStrategy || !practiceProblems || !probability) {
+
+    const {title, prompt, responseStrategy, practiceProblems, probability } = req.body;
+    if (!title || !prompt || !responseStrategy || !practiceProblems || !probability) {
       return res.status(400).json({ error: 'History object is not in correct format' });
     }
-
-    const historyObject = new UserProgress({prompt, responseStrategy, practiceProblems, probability});
+    const historyObject = new UserProgress({title, prompt, responseStrategy, practiceProblems, probability});
+    const existingData = await UserProgress.findOne({title});
+    console.log('existingData in history', existingData);
+    if(existingData){
+    const historyPlainObject = existingData.toObject();
+    const { _id, ...historyObjectWithoutId } = historyPlainObject;
+    console.log('historyObjectwithoutID', historyPlainObject);
+    await UserProgress.updateOne({title}, {$set: historyPlainObject}, {upsert: true});
+    } else {
     await historyObject.save();
-    return res.status(200).json({ message: 'History stored successfully' });
+    }
+
+    return res.status(200).json({ message: 'History updated successfully' });
   } catch (error) {
     console.error('Error in parseUserQuery:', error);
     next(error);
@@ -18,8 +28,8 @@ const storeHistory = async (req, res, next) => {
 
 const getHistory = async (req, res, next) => {
   try {
-    const data = await UserProgress.find({});
-    console.log('data from mongose', data);
+    const data = await UserProgress.find({}); //grabs all the documents from the backend
+    console.log('data from mongoose', data);
     res.locals.history = data;
     return res.status(200).json(res.locals.history);
   } catch (error) {
@@ -28,4 +38,18 @@ const getHistory = async (req, res, next) => {
   }
 };
 
-export {storeHistory, getHistory};
+const getTitle = async (req, res, next) => {
+  try {
+    const {title} = req.query;
+    console.log('title', title)
+    const data = await UserProgress.findOne({title}); //grabs all the documents from the backend
+    console.log('data from mongoose', data);
+    res.locals.titleData = data;
+    return res.status(200).json(res.locals.titleData);
+  } catch (error) {
+    console.error('Error in getHistory:', error);
+    next(error);
+  }
+};
+
+export {storeHistory, getHistory, getTitle};
