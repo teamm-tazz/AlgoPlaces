@@ -56,42 +56,57 @@ apiFetch.requestPracticeProblems = async (query) => {
   }
 };
 
-
 apiFetch.storeHistoryObj = async (obj) => {
-  try{
+  try {
     console.log('obj in storeHistoryObj apiFetch', obj);
     const response = await fetch('http://localhost:3000/api/storeHistory', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(obj),
-      });
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(obj),
+    });
 
     if (!response.ok) {
-      throw new Error ('Error in storing user history.');
+      throw new Error('Error in storing user history.');
     }
     const data = await response.json();
     console.log(`Here's the history being stored: ${data}`);
   } catch (err) {
-    console.error ('This is the error in apiFetch.storeHistory')
+    console.error('This is the error in apiFetch.storeHistory');
   }
 };
 
-
 apiFetch.getHistory = async () => {
-  try{
-    console.log("apiFetch");
-    const response = await fetch('http://localhost:3000/api/getHistory')
+  try {
+    console.log('apiFetch');
+    const response = await fetch('http://localhost:3000/api/getHistory');
     if (!response.ok) {
-      throw new Error ('Error in getting stored history.');
+      throw new Error('Error in getting stored history.');
     }
     const data = await response.json();
     console.log(`Data from backend: ${data}`);
     return data;
-
   } catch (err) {
-    console.error ('This is the error in apiFetch.getHistoryObject');
+    console.error('This is the error in apiFetch.getHistoryObject');
   }
-}
+};
+apiFetch.matchTitle = async (title) => {
+  try {
+    console.log('making fetch resuqest with title:', title);
+    const response = await fetch(
+      `http://localhost:3000/api/matchTitle/${title}`
+    );
+
+    if (!response.ok) {
+      throw new Error('Error in sending over the title');
+    }
+
+    const data = await response.json();
+    console.log('This the data from backend ', data);
+    return data;
+  } catch (err) {
+    console.error('This is the error in apiFetch.matchTitle', err);
+  }
+};
 export default apiFetch;
