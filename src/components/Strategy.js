@@ -46,8 +46,10 @@ function Strategy({ strategy, probability, loading }) {
             contentLoaded ? 'opacity-100' : 'opacity-0'
           }`}
         >
-          <p className='mb-4'>{strategy}</p>
-          <p className='text-l font-bold mb-2'>
+          <p className='text-lg bg-gradient-to-r from-[#96afe6]/40 to-[#a997dd]/40 p-4 rounded-3xl flex mb-4 items-center justify-between'>
+            {strategy}
+          </p>
+          <p className='text-l text-gray-600 font-bold mb-2'>
             Interview Probability: {probability}
           </p>
         </div>

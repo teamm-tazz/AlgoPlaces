@@ -34,13 +34,13 @@ function PracticeProblem({
     //clickedBox is being identified by its ID, which is the index
     //toggle problem.isCompleted to true (use ! i think no true since we want to able to uncheck)
     //use functional state handler to change state of problem array
-    setPracticeProblems((prev) =>
-      prev.map((problem, i) =>
-        i === clickedBox
-          ? { ...problem, isCompleted: !problem.isCompleted }
-          : problem
-      )
-    );
+    // setPracticeProblems((prev) =>
+    //   prev.map((problem, i) =>
+    //     i === clickedBox
+    //       ? { ...problem, isCompleted: !problem.isCompleted }
+    //       : problem
+    //   )
+    // );
 
     await setEntryObj((prev) => ({
       ...prev,
@@ -54,7 +54,7 @@ function PracticeProblem({
 
   return (
     <div
-      className={`p-4 mb-4 rounded-lg shadow-lg bg-gradient-to-r from-[#94B0B7] to-[#C2C8C5] break-words transition-opacity duration-500 ${
+      className={`p-4 mb-4 rounded-lg shadow-lg bg-gradient-to-r from-[#94B0B7] to-[#C2C8C5] break-words transition-opacity duration-500 max-h-[1000px] overflow-hidden ${
         containerLoaded ? 'opacity-100' : 'opacity-0'
       }`}
     >
@@ -73,13 +73,28 @@ function PracticeProblem({
         </div>
       ) : (
         <ul
-          className={`transition-all duration-500 ease-in-out transform ${
-            contentLoaded ? 'opacity-100' : 'opacity-0'
-          }`}
+          className={`
+            transition-all 
+            duration-500 
+            ease-in-out 
+            transform 
+            overflow-y-auto 
+            max-h-[800px] 
+            pr-4
+            scrollbar-thin
+            scrollbar-thumb-[#4A707A]
+            scrollbar-track-transparent
+            scrollbar-thumb-rounded-full
+            hover:scrollbar-thumb-[#4A707A]/80
+            ${contentLoaded ? 'opacity-100' : 'opacity-0'}
+          `}
         >
           {practiceProblems.map((problem, index) => (
-            <div>
-              <li key={index}>{problem.problem}</li>
+            <div
+              key={index}
+              className='bg-gradient-to-r from-[#96afe6]/40 to-[#a997dd]/40 p-4 rounded-3xl flex mb-4 items-center justify-between'
+            >
+              <li className='font-open-sans'>{problem.problem}</li>
               {/*//inside, map, assign a checkbox to each problem here*/}
               <input
                 type='checkbox'
@@ -90,19 +105,20 @@ function PracticeProblem({
               />{' '}
               <label
                 htmlFor={`checkbox-${index}`}
-                className='cursor-pointer w-6 h-6 border-2 border-[#4A707A] rounded flex items-center justify-center transition-all duration-200 hover:bg-[#4A707A]/10'
+                className={`cursor-pointer min-w-4 min-h-4 w-6 h-6 ml-4 border-2 border-[#4A707A] rounded flex items-center justify-center transition-all duration-200 
+                  ${
+                    problem.isCompleted
+                      ? 'bg-[#4A707A]'
+                      : 'hover:bg-[#4A707A]/10'
+                  }`}
               >
                 {problem.isCompleted && (
                   <svg
-                    className='w-4 h-4 text-[#4A707A]'
+                    className='w-4 h-4 text-white'
                     viewBox='0 0 20 20'
                     fill='currentColor'
                   >
-                    <path
-                      fillRule='evenodd'
-                      d='M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z'
-                      clipRule='evenodd'
-                    />
+                    <path d='M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z' />
                   </svg>
                 )}
               </label>
