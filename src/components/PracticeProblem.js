@@ -54,7 +54,7 @@ function PracticeProblem({
 
   return (
     <div
-      className={`p-4 mb-4 rounded-xl shadow-lg bg-gradient-to-l from-[#022839] via-[#6f6a98] to-[#978aab] break-words transition-opacity duration-500 max-h-[1000px] overflow-hidden ${
+      className={`p-4 mb-4 rounded-xl shadow-lg bg-gradient-to-l from-[#0f3140] via-[#6f6a98] to-[#978aab] break-words transition-opacity duration-500 max-h-[1000px] overflow-hidden ${
         containerLoaded ? 'opacity-100' : 'opacity-0'
       }`}
     >
@@ -64,7 +64,7 @@ function PracticeProblem({
           <MutatingDots
             height={110}
             width={110}
-            color='#4A707A'
+            color='#0f3140'
             secondaryColor='#C2C8C5'
             ariaLabel='mutating-dots-loading'
             radius={15}

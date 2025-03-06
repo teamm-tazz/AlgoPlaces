@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import submitIcon from '../assets/images/up-arrow.png';
+import brainIcon from '../assets/brain.png';
+
 function LandingPage() {
   //create useState that updates empty query
   const [query, setQuery] = useState(''); //query is originally an empty string
@@ -18,9 +20,16 @@ function LandingPage() {
 
   return (
     <div>
-      <h1 className='text-4xl font-bold pl-8 pt-8 bg-[#022839] text-[#C2C8C5]'>
-        AlgoPlaces
-      </h1>
+      <div className='bg-[#022839] pl-20 pt-10 pb-10'>
+        <div className='flex items-center gap-4'>
+          <h1 className='text-5xl font-bold text-[#C2C8C5]'>AlgoPlaces</h1>
+          <img
+            src={brainIcon}
+            alt='brain icon'
+            className='h-12 w-12 object-contain filter brightness-90 invert opacity-80'
+          />
+        </div>
+      </div>
 
       <div className='min-h-screen flex items-center justify-center bg-gradient-to-b from-[#022839]  to-[#3e3656] pb-60'>
         <div className='text-center w-full max-w-7xl mx-auto px-4'>
