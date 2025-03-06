@@ -27,7 +27,7 @@ function Strategy({ strategy, probability, loading }) {
         containerLoaded ? 'opacity-100' : 'opacity-0'
       }`}
     >
-      <h2 className='text-3xl font-bold mb-2'>Strategy</h2>
+      <h2 className='text-3xl font-poppins font-bold mb-2'>Strategy</h2>
       {loading ? (
         <div className='flex justify-center items-center'>
           <MutatingDots
@@ -46,7 +46,7 @@ function Strategy({ strategy, probability, loading }) {
             contentLoaded ? 'opacity-100' : 'opacity-0'
           }`}
         >
-          <p className='text-xl font-open-sans bg-[#ffffff]/50 p-4 rounded-3xl flex mb-4 items-center justify-between'>
+          <p className='text-2xl font-poppins bg-[#ffffff]/50 p-4 rounded-3xl flex mb-4 items-center justify-between'>
             {strategy}
           </p>
           <p className='text-xl  font-bold mb-2'>

@@ -58,7 +58,9 @@ function PracticeProblem({
         containerLoaded ? 'opacity-100' : 'opacity-0'
       }`}
     >
-      <h2 className='text-3xl font-bold mb-2'>Practice Problems</h2>
+      <h2 className='text-3xl font-poppins font-bold mb-2'>
+        Practice Problems
+      </h2>
       {loading ? (
         <div className='flex justify-center items-center'>
           <MutatingDots
@@ -94,7 +96,7 @@ function PracticeProblem({
               key={index}
               className='bg-[#ffffff]/50  p-4 rounded-3xl flex mb-4 items-center justify-between'
             >
-              <li className='font-open-sans'>{problem.problem}</li>
+              <li className='text-lg font-poppins'>{problem.problem}</li>
               {/*//inside, map, assign a checkbox to each problem here*/}
               <input
                 type='checkbox'
