@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import submitIcon from '../assets/images/up-arrow.png';
-import brainIcon from '../assets/brain.png';
+import brainIcon from '../assets/images/brain.png';
 
 function LandingPage() {
   //create useState that updates empty query

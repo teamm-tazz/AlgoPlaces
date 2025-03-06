@@ -7,7 +7,10 @@ import InputProblem from './InputProblem';
 import apiFetch from '../apiFetch';
 import { googleLogout } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import brainIcon from '../assets/brain.png';
+import brainIcon from '../assets/images/brain.png';
+import plusIcon from '../assets/images/plus.png';
+import historyIcon from '../assets/images/history.png';
+import logoutIcon from '../assets/images/log-out.png';
 
 function Dashboard() {
   const location = useLocation();
@@ -29,6 +32,9 @@ function Dashboard() {
   const [historyObjIsComplete, setHistoryObjIsComplete] = useState(false);
   const [initialLoad, setInitialLoad] = useState(true);
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
+
+  /// navigate for signout and new prompt buttons in header
+  const navigate = useNavigate();
 
   ///logging user object after auth
   console.log(
@@ -99,6 +105,17 @@ function Dashboard() {
       console.error(`This is the error in storingHistory: ${err}`);
     }
   };
+  /// HANDLER TO NAVIGATE TO LANDING PAGE FOR NEW PROMPT
+  const handleNewPrompt = () => {
+    navigate('/landingpage');
+  };
+
+  /// HANDLER TO SIGN OUT AND NAVIGATE TO LOGIN PAGE
+  const handleSignOut = () => {
+    googleLogout();
+    localStorage.removeItem('user');
+    navigate('/');
+  };
 
   useEffect(() => {
     getStrategy();
@@ -145,25 +162,45 @@ function Dashboard() {
             className='h-12 w-12 object-contain filter brightness-90 invert opacity-80'
           />
         </div>
-        <button
-          onClick={() => setIsHistoryOpen(!isHistoryOpen)}
-          className='p-2 rounded-full bg-[#4A707A] hover:bg-[#4A707A]/80 transition-all duration-200'
-        >
-          <svg
-            xmlns='http://www.w3.org/2000/svg'
-            className='h-8 w-8 text-[#C2C8C5]'
-            fill='none'
-            viewBox='0 0 24 24'
-            stroke='currentColor'
+        <div className='flex items-center gap-3'>
+          {/* Add New Button */}
+          <button
+            onClick={handleNewPrompt}
+            className='p-2 rounded-full bg-[#4A707A] hover:bg-[#4A707A]/80 transition-all duration-200'
           >
-            <path
-              strokeLinecap='round'
-              strokeLinejoin='round'
-              strokeWidth={2}
-              d='M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z'
-            />
-          </svg>
-        </button>
+            <div className='h-8 w-8 flex items-center justify-center'>
+              <img
+                src={plusIcon}
+                alt='New Prompt'
+                className='h-4 w-4 object-contain filter brightness-90 invert opacity-80'
+              />
+            </div>
+          </button>
+          <button
+            onClick={() => setIsHistoryOpen(!isHistoryOpen)}
+            className='p-2 rounded-full bg-[#4A707A] hover:bg-[#4A707A]/80 transition-all duration-200'
+          >
+            <div className='h-8 w-8 flex items-center justify-center'>
+              <img
+                src={historyIcon}
+                alt='History'
+                className='h-6 w-6 object-contain filter brightness-90 invert opacity-80'
+              />
+            </div>
+          </button>
+          <button
+            onClick={handleSignOut}
+            className='p-2 rounded-full bg-[#4A707A] hover:bg-[#4A707A]/80 transition-all duration-200'
+          >
+            <div className='h-8 w-8 flex items-center justify-center'>
+              <img
+                src={logoutIcon}
+                alt='Sign Out'
+                className='h-7 w-7 object-contain filter brightness-90 invert opacity-80'
+              />
+            </div>
+          </button>
+        </div>
       </div>
 
       <div

@@ -4,6 +4,8 @@ module.exports = {
     extend: {
       fontFamily: {
         'open-sans': ['Open Sans', 'sans-serif'],
+        inconsolata: ['Inconsolata', 'monospace'],
+        poppins: ['Poppins', 'sans-serif'],
       },
     },
   },
