@@ -5,6 +5,8 @@ import Strategy from './Strategy';
 import History from './History';
 import InputProblem from './InputProblem';
 import apiFetch from '../apiFetch';
+import { googleLogout } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function Dashboard() {
   const location = useLocation();
@@ -26,8 +28,19 @@ function Dashboard() {
   const [historyObjIsComplete, setHistoryObjIsComplete] = useState(false);
   const [initialLoad, setInitialLoad] = useState(true);
 
-  console.log('This is the query sent to us from da landing page: ', userQuery);
+  ///logging user object after auth
+  console.log(
+    'user object from authentication using getItem method:',
+    localStorage.getItem('user')
+  );
 
+  console.log('This is the query sent to us from da landing page: ', userQuery);
+  /// HANDLER FUNCTION TO LOGOUT
+  const handleLogout = () => {
+    googleLogout();
+    localStorage.removeItem('user');
+    Navigate('/');
+  };
   const getStrategy = async () => {
     setLoading(true);
 
@@ -121,11 +134,11 @@ function Dashboard() {
 
   return (
     <div>
-      <h1 className='text-4xl font-bold p-8 bg-[#022839] text-[#C2C8C5]'>
+      <h1 className='text-5xl font-bold pl-20 pt-10 bg-[#022839] text-[#C2C8C5]'>
         AlgoPlaces
       </h1>
-      <div className='p-4 min-h-screen'>
-        <div className='grid grid-cols-2 gap-4 transition-opacity duration-500 opacity-100'>
+      <div className='pl-20 pr-20 pt-10 min-h-screen'>
+        <div className='grid grid-cols-2 gap-10 transition-opacity duration-500 opacity-100'>
           <div className='col-span-1'>
             <InputProblem inputProblem={prompt} title={title} />
             <Strategy

@@ -5,13 +5,15 @@ import InputProblem from './InputProblem';
 import Strategy from './Strategy';
 import '../App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { LoginPage } from './LoginPage';
 
 function App() {
   return (
     <div className='min-h-screen bg-gradient-to-b from-[#022839]  to-[#3e3656]'>
       <BrowserRouter>
         <Routes>
-          <Route path='/' exact element={<LandingPage />} />
+          <Route path='/' exact element={<LoginPage />} />
+          <Route path='/landingpage' exact element={<LandingPage />} />
           <Route path='/dashboard' exact element={<Dashboard />} />
         </Routes>
       </BrowserRouter>
