@@ -54,17 +54,17 @@ function PracticeProblem({
 
   return (
     <div
-      className={`p-4 mb-4 rounded-lg shadow-lg bg-gradient-to-r from-[#94B0B7] to-[#C2C8C5] break-words transition-opacity duration-500 max-h-[1000px] overflow-hidden ${
+      className={`p-4 mb-4 rounded-xl shadow-lg bg-gradient-to-l from-[#0f3140] via-[#6f6a98] to-[#978aab] break-words transition-opacity duration-500 max-h-[1000px] overflow-hidden ${
         containerLoaded ? 'opacity-100' : 'opacity-0'
       }`}
     >
-      <h2 className='text-xl font-bold mb-2'>Practice Problems</h2>
+      <h2 className='text-3xl font-bold mb-2'>Practice Problems</h2>
       {loading ? (
         <div className='flex justify-center items-center'>
           <MutatingDots
             height={110}
             width={110}
-            color='#4A707A'
+            color='#0f3140'
             secondaryColor='#C2C8C5'
             ariaLabel='mutating-dots-loading'
             radius={15}
@@ -92,7 +92,7 @@ function PracticeProblem({
           {practiceProblems.map((problem, index) => (
             <div
               key={index}
-              className='bg-gradient-to-r from-[#96afe6]/40 to-[#a997dd]/40 p-4 rounded-3xl flex mb-4 items-center justify-between'
+              className='bg-[#ffffff]/50  p-4 rounded-3xl flex mb-4 items-center justify-between'
             >
               <li className='font-open-sans'>{problem.problem}</li>
               {/*//inside, map, assign a checkbox to each problem here*/}

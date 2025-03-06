@@ -8,10 +8,13 @@
     "dev": "nodemon server/server.js"
   },
   "dependencies": {
+    "@react-oauth/google": "^0.12.1",
     "babel": "^5.8.38",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.17.1",
+    "jsonwebtoken": "^9.0.2",
+    "jwt-decode": "^4.0.0",
     "mongoose": "^5.10.9",
     "openai": "^3.1.0",
     "react": "^18.2.0",

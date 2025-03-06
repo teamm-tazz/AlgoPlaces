@@ -5,6 +5,9 @@ import Strategy from './Strategy';
 import History from './History';
 import InputProblem from './InputProblem';
 import apiFetch from '../apiFetch';
+import { googleLogout } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import brainIcon from '../assets/brain.png';
 
 function Dashboard() {
   const location = useLocation();
@@ -25,9 +28,21 @@ function Dashboard() {
   });
   const [historyObjIsComplete, setHistoryObjIsComplete] = useState(false);
   const [initialLoad, setInitialLoad] = useState(true);
+  const [isHistoryOpen, setIsHistoryOpen] = useState(false);
+
+  ///logging user object after auth
+  console.log(
+    'user object from authentication using getItem method:',
+    localStorage.getItem('user')
+  );
 
   console.log('This is the query sent to us from da landing page: ', userQuery);
-
+  /// HANDLER FUNCTION TO LOGOUT
+  const handleLogout = () => {
+    googleLogout();
+    localStorage.removeItem('user');
+    Navigate('/');
+  };
   const getStrategy = async () => {
     setLoading(true);
 
@@ -120,12 +135,43 @@ function Dashboard() {
   }, [entryObj]);
 
   return (
-    <div>
-      <h1 className='text-4xl font-bold p-8 bg-[#022839] text-[#C2C8C5]'>
-        AlgoPlaces
-      </h1>
-      <div className='p-4 min-h-screen'>
-        <div className='grid grid-cols-2 gap-4 transition-opacity duration-500 opacity-100'>
+    <div className='relative'>
+      <div className='w-full h-full bg-[#022839] pb-10 pt-6 pl-20 pr-20 flex justify-between items-center'>
+        <div className='flex items-center gap-4'>
+          <h1 className='text-5xl font-bold text-[#C2C8C5]'>AlgoPlaces</h1>
+          <img
+            src={brainIcon}
+            alt='brain icon'
+            className='h-12 w-12 object-contain filter brightness-90 invert opacity-80'
+          />
+        </div>
+        <button
+          onClick={() => setIsHistoryOpen(!isHistoryOpen)}
+          className='p-2 rounded-full bg-[#4A707A] hover:bg-[#4A707A]/80 transition-all duration-200'
+        >
+          <svg
+            xmlns='http://www.w3.org/2000/svg'
+            className='h-8 w-8 text-[#C2C8C5]'
+            fill='none'
+            viewBox='0 0 24 24'
+            stroke='currentColor'
+          >
+            <path
+              strokeLinecap='round'
+              strokeLinejoin='round'
+              strokeWidth={2}
+              d='M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z'
+            />
+          </svg>
+        </button>
+      </div>
+
+      <div
+        className={`px-20 min-h-screen transition-all duration-300 ease-in-out ${
+          isHistoryOpen ? 'pr-[384px]' : ''
+        }`}
+      >
+        <div className='grid grid-cols-2 gap-10 transition-opacity duration-500 opacity-100'>
           <div className='col-span-1'>
             <InputProblem inputProblem={prompt} title={title} />
             <Strategy
@@ -143,8 +189,22 @@ function Dashboard() {
               entryObj={entryObj}
             />
           </div>
-          <div className='col-span-1'>
-            <History loading={loading} setEntryObj={setEntryObj} />
+        </div>
+      </div>
+
+      <div
+        className={`fixed top-0 right-0 h-full w-96 shadow-xl transform transition-transform duration-300 ease-in-out ${
+          isHistoryOpen ? 'translate-x-0' : 'translate-x-full'
+        }`}
+      >
+        <div className='h-full flex'>
+          <div className='w-6'></div>
+          <div className='flex-1 bg-gradient-to-b from-[#022839] to-[#3e3656]'>
+            <History
+              loading={loading}
+              setEntryObj={setEntryObj}
+              onClose={() => setIsHistoryOpen(false)}
+            />
           </div>
         </div>
       </div>
