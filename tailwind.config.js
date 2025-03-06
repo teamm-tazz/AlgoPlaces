@@ -1,7 +1,13 @@
 module.exports = {
   content: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        'open-sans': ['Open Sans', 'sans-serif'],
+      },
+    },
   },
-  plugins: [],
+  plugins: [
+    require('tailwind-scrollbar')({ preferredStrategy: 'pseudoelements' }),
+  ],
 };

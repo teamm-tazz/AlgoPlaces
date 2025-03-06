@@ -14,6 +14,7 @@ function Dashboard() {
   const [strategy, setStrategy] = useState('');
   const [probability, setProbability] = useState('');
   const [practiceProblems, setPracticeProblems] = useState([]);
+  const [prompt, setPrompt] = useState('');
   const [entryObj, setEntryObj] = useState({
     //set history obj with query info to the response obj the server is sending back
     title: '',
@@ -23,6 +24,7 @@ function Dashboard() {
     practiceProblems: [],
   });
   const [historyObjIsComplete, setHistoryObjIsComplete] = useState(false);
+  const [initialLoad, setInitialLoad] = useState(true);
 
   console.log('This is the query sent to us from da landing page: ', userQuery);
 
@@ -37,6 +39,7 @@ function Dashboard() {
       setTitle(result.title);
       setStrategy(result.responseStrategy);
       setProbability(result.probability);
+      setPrompt(result.prompt);
       //use a functional state update to update the history object
       setEntryObj((prev) => ({
         ...prev,
@@ -87,8 +90,10 @@ function Dashboard() {
   }, [userQuery]);
 
   useEffect(() => {
-    if (strategy) {
+    /// make sure we only generate practiceProblems on initial Load/ redirect from landing page
+    if (strategy && initialLoad) {
       getPracticeProblems();
+      setInitialLoad(false);
     }
   }, [strategy]);
 
@@ -99,16 +104,19 @@ function Dashboard() {
   useEffect(() => {
     //stores history object in database when ready
     console.log('history updated: ', entryObj);
-    if (historyObjIsComplete) {
+    if (historyObjIsComplete || entryObj.practiceProblems.length > 0) {
       //condition to check before calling the fetch function
       setHistoryObjIsComplete(false);
       storeHistory(entryObj);
     }
 
-    setTitle(entryObj.title);
-    setStrategy(entryObj.responseStrategy);
-    setProbability(entryObj.probability);
-    setPracticeProblems(entryObj.practiceProblems);
+    if (!initialLoad) {
+      setTitle(entryObj.title);
+      setStrategy(entryObj.responseStrategy);
+      setProbability(entryObj.probability);
+      setPracticeProblems(entryObj.practiceProblems);
+      setPrompt(entryObj.prompt);
+    }
   }, [entryObj]);
 
   return (
@@ -119,7 +127,7 @@ function Dashboard() {
       <div className='p-4 min-h-screen'>
         <div className='grid grid-cols-2 gap-4 transition-opacity duration-500 opacity-100'>
           <div className='col-span-1'>
-            <InputProblem inputProblem={userQuery} title={title} />
+            <InputProblem inputProblem={prompt} title={title} />
             <Strategy
               strategy={strategy}
               probability={probability}

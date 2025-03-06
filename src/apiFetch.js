@@ -91,9 +91,9 @@ apiFetch.getHistory = async () => {
     console.error('This is the error in apiFetch.getHistoryObject');
   }
 };
+
 apiFetch.matchTitle = async (title) => {
   try {
-    console.log('making fetch resuqest with title:', title);
     const response = await fetch(
       `http://localhost:3000/api/matchTitle/${title}`
     );
@@ -109,4 +109,5 @@ apiFetch.matchTitle = async (title) => {
     console.error('This is the error in apiFetch.matchTitle', err);
   }
 };
+
 export default apiFetch;
