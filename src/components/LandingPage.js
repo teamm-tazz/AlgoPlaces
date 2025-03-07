@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import submitIcon from '../assets/images/up-arrow.png';
 import brainIcon from '../assets/images/brain.png';
+import '../App.css';
 
 function LandingPage() {
   //create useState that updates empty query
@@ -19,7 +20,7 @@ function LandingPage() {
   };
 
   return (
-    <div>
+    <div className='fade-in'>
       <div className='bg-[#022839] pl-20 pt-10 pb-10'>
         <div className='flex items-center gap-4'>
           <h1 className='text-5xl font-bold text-[#C2C8C5]'>AlgoPlaces</h1>
@@ -67,4 +68,5 @@ function LandingPage() {
     </div>
   );
 }
+
 export default LandingPage;
