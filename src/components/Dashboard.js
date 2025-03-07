@@ -5,12 +5,13 @@ import Strategy from './Strategy';
 import History from './History';
 import InputProblem from './InputProblem';
 import apiFetch from '../apiFetch';
-import { googleLogout } from 'react-router-dom';
+import { googleLogout } from '@react-oauth/google';
 import { useNavigate } from 'react-router-dom';
 import brainIcon from '../assets/images/brain.png';
 import plusIcon from '../assets/images/plus.png';
 import historyIcon from '../assets/images/history.png';
 import logoutIcon from '../assets/images/log-out.png';
+import '../App.css';
 
 function Dashboard() {
   const location = useLocation();
@@ -46,8 +47,12 @@ function Dashboard() {
   /// HANDLER FUNCTION TO LOGOUT
   const handleLogout = () => {
     googleLogout();
+    console.log(
+      'user before deleting and loging out:',
+      localStorage.getItem('user')
+    );
     localStorage.removeItem('user');
-    Navigate('/');
+    navigate('/');
   };
   const getStrategy = async () => {
     setLoading(true);
@@ -110,13 +115,6 @@ function Dashboard() {
     navigate('/landingpage');
   };
 
-  /// HANDLER TO SIGN OUT AND NAVIGATE TO LOGIN PAGE
-  const handleSignOut = () => {
-    googleLogout();
-    localStorage.removeItem('user');
-    navigate('/');
-  };
-
   useEffect(() => {
     getStrategy();
   }, [userQuery]);
@@ -152,7 +150,7 @@ function Dashboard() {
   }, [entryObj]);
 
   return (
-    <div className='relative'>
+    <div className='relative fade-in'>
       <div className='w-full h-full bg-[#022839] pb-10 pt-6 pl-20 pr-20 flex justify-between items-center'>
         <div className='flex items-center gap-4'>
           <h1 className='text-5xl font-bold text-[#C2C8C5]'>AlgoPlaces</h1>
@@ -189,7 +187,7 @@ function Dashboard() {
             </div>
           </button>
           <button
-            onClick={handleSignOut}
+            onClick={handleLogout}
             className='p-2 rounded-full bg-[#4A707A] hover:bg-[#4A707A]/80 transition-all duration-200'
           >
             <div className='h-8 w-8 flex items-center justify-center'>
