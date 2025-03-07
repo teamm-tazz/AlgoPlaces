@@ -60,7 +60,8 @@ export const upsertText = async (id, text, metadata = {}) => {
 export const querySimilarTexts = async (text, topK = 10) => {
   try {
     const embedding = await generateEmbedding(text);
-    return await queryVectors(embedding, topK);
+    const results = await queryVectors(embedding, topK);
+    return results || [];
   } catch (error) {
     console.error('Error querying similar texts:', error);
     throw error;
