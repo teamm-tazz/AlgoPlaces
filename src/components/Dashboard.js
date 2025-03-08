@@ -34,6 +34,7 @@ function Dashboard() {
   const [initialLoad, setInitialLoad] = useState(true);
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
   const [userName, setUserName] = useState('');
+  const [refreshHistory, setRefreshHistory] = useState(false);
 
   /// navigate for signout and new prompt buttons in header
   const navigate = useNavigate();
@@ -123,6 +124,7 @@ function Dashboard() {
         userName,
       });
       console.log('response from storing history:', response);
+      setRefreshHistory(true);
     } catch (err) {
       console.error(`This is the error in storingHistory: ${err}`);
     }
@@ -257,6 +259,8 @@ function Dashboard() {
               entry={entryObj}
               setEntryObj={setEntryObj}
               onClose={() => setIsHistoryOpen(false)}
+              refreshHistory={refreshHistory}
+              setRefreshHistory={setRefreshHistory}
             />
           </div>
         </div>

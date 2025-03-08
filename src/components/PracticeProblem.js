@@ -94,20 +94,11 @@ function PracticeProblem({
           {practiceProblems.map((problem, index) => (
             <div
               key={index}
-              className='bg-[#ffffff]/50  p-4 rounded-3xl flex mb-4 items-center justify-between'
+              className='bg-[#ffffff]/50  p-4  rounded-3xl flex mb-4 items-center '
             >
-              <li className='text-lg font-poppins'>{problem.problem}</li>
-              {/*//inside, map, assign a checkbox to each problem here*/}
-              <input
-                type='checkbox'
-                id={`checkbox-${index}`}
-                checked={problem.isCompleted}
-                onChange={() => handleCheckmark(index)}
-                className='hidden'
-              />{' '}
               <label
                 htmlFor={`checkbox-${index}`}
-                className={`cursor-pointer min-w-4 min-h-4 w-6 h-6 ml-4 border-2 border-[#4A707A] rounded flex items-center justify-center transition-all duration-200 
+                className={`cursor-pointer min-w-4 min-h-4 w-6 h-6 pr-6 ml-4 border-2 border-[#4A707A] rounded-full flex items-center justify-center transition-all duration-200 
                   ${
                     problem.isCompleted
                       ? 'bg-[#4A707A]'
@@ -124,6 +115,14 @@ function PracticeProblem({
                   </svg>
                 )}
               </label>
+              <li className='pl-6 text-lg font-poppins'>{problem.problem}</li>
+              <input
+                type='checkbox'
+                id={`checkbox-${index}`}
+                checked={problem.isCompleted}
+                onChange={() => handleCheckmark(index)}
+                className='hidden'
+              />{' '}
             </div>
           ))}
         </ul>
