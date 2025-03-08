@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import apiFetch from '../apiFetch';
 import { MutatingDots } from 'react-loader-spinner';
 
-function History({ loading, setEntryObj, onClose }) {
+function History({ loading, entryObj, setEntryObj, onClose }) {
   const [historyObj, setHistoryObj] = useState([]);
   const [containerLoaded, setContainerLoaded] = useState(false);
   const [contentLoaded, setContentLoaded] = useState(false);
@@ -23,25 +23,27 @@ function History({ loading, setEntryObj, onClose }) {
 
   const getHistoryObject = async () => {
     try {
-      const response = await apiFetch.getHistory();
+      const user = JSON.parse(localStorage.getItem('user'));
+      const response = await apiFetch.getHistory(user.name);
       console.log('data in getHistoryObject', response);
-      setHistoryObj(response);
+      setHistoryObj(response || []); // Ensure historyObj is always an array
       console.log('historyObj', historyObj);
     } catch (err) {
       console.error(`This is the error in storingHistory: ${err}`);
+      setHistoryObj([]); // Set historyObj to an empty array on error
     }
   };
 
   useEffect(() => {
     getHistoryObject();
-  }, []);
+  }, [entryObj]);
 
   const handleMatchTitle = async (title) => {
     try {
       console.log('title in handleMatchTitle', title);
-      const response = await apiFetch.matchTitle(title);
+      const user = JSON.parse(localStorage.getItem('user'));
+      const response = await apiFetch.matchTitle(title, user.name);
       console.log('Requested entry object from Database:', response);
-      /// confirm with amrita that we are getting back an object in the format of entryOb
       setEntryObj(response);
     } catch (err) {
       console.error('This is the error in handleMatchTitle ', err);
@@ -89,18 +91,23 @@ function History({ loading, setEntryObj, onClose }) {
         </div>
       ) : (
         <div className='space-y-4'>
-          {historyObj.map((item, index) => (
-            <button
-              key={index}
-              onClick={() => handleMatchTitle(item.title)}
-              className='w-full text-left p-4 rounded-lg bg-white/10 hover:bg-white/20 transition-colors duration-200 text-[#C2C8C5]'
-            >
-              {item.title}
-            </button>
-          ))}
+          {Array.isArray(historyObj) && historyObj.length > 0 ? (
+            historyObj.map((item, index) => (
+              <button
+                key={index}
+                onClick={() => handleMatchTitle(item.title)}
+                className='w-full text-left p-4 rounded-lg bg-white/10 hover:bg-white/20 transition-colors duration-200 text-[#C2C8C5]'
+              >
+                {item.title}
+              </button>
+            ))
+          ) : (
+            <p className='text-center text-[#C2C8C5]'>No history available</p>
+          )}
         </div>
       )}
     </div>
   );
 }
+
 export default History;

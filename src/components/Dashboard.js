@@ -33,24 +33,37 @@ function Dashboard() {
   const [historyObjIsComplete, setHistoryObjIsComplete] = useState(false);
   const [initialLoad, setInitialLoad] = useState(true);
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
+  const [userName, setUserName] = useState('');
 
   /// navigate for signout and new prompt buttons in header
   const navigate = useNavigate();
 
+  /// on mount, extract user name from localStorage and save to useState
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (!user && !user.name) {
+      console.log(
+        'No user Identified, Please go back to login page and try again.'
+      );
+    }
+    setUserName(user.name);
+    console.log('extracted user:', user.name);
+  }, []);
+
   ///logging user object after auth
-  console.log(
-    'user object from authentication using getItem method:',
-    localStorage.getItem('user')
-  );
+  // console.log(
+  //   'user object from authentication using getItem method:',
+  //   localStorage.getItem('user')
+  // );
 
   console.log('This is the query sent to us from da landing page: ', userQuery);
   /// HANDLER FUNCTION TO LOGOUT
   const handleLogout = () => {
     googleLogout();
-    console.log(
-      'user before deleting and loging out:',
-      localStorage.getItem('user')
-    );
+    // console.log(
+    //   'user before deleting and loging out:',
+    //   localStorage.getItem('user')
+    // );
     localStorage.removeItem('user');
     navigate('/');
   };
@@ -105,7 +118,11 @@ function Dashboard() {
     //function that runs once the entry object has all the parameters
     try {
       console.log('entryObj to store in DB', entryObj);
-      const response = await apiFetch.storeHistoryObj(entryObj);
+      const response = await apiFetch.storeHistoryObj({
+        ...entryObj,
+        userName,
+      });
+      console.log('response from storing history:', response);
     } catch (err) {
       console.error(`This is the error in storingHistory: ${err}`);
     }
@@ -237,6 +254,7 @@ function Dashboard() {
           <div className='flex-1 bg-gradient-to-b from-[#022839] to-[#3e3656]'>
             <History
               loading={loading}
+              entry={entryObj}
               setEntryObj={setEntryObj}
               onClose={() => setIsHistoryOpen(false)}
             />

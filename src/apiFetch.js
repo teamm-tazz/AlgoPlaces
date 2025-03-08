@@ -1,8 +1,8 @@
 const apiFetch = {};
 apiFetch.requestStrategy = async (query) => {
-  console.log('Making query in apiFetch.requestStrategy: ', query);
+  // console.log('Making query in apiFetch.requestStrategy: ', query);
   try {
-    console.log('Making query in apiFetch.requestStrategy: ', query);
+    // console.log('Making query in apiFetch.requestStrategy: ', query);
     const response = await fetch('http://localhost:3000/api/generate', {
       method: 'POST',
       headers: {
@@ -17,9 +17,9 @@ apiFetch.requestStrategy = async (query) => {
         response.status
       );
     }
-    console.log('response strategy before parsing: ', response);
+    // console.log('response strategy before parsing: ', response);
     const data = await response.json();
-    console.log('Here is the generated approach response: ', data);
+    // console.log('Here is the generated approach response: ', data);
     return data;
   } catch (err) {
     console.error(`This is the error in apiFetch.requestStrategy : ${err}`);
@@ -73,14 +73,16 @@ apiFetch.storeHistoryObj = async (obj) => {
     const data = await response.json();
     console.log(`Here's the history being stored: ${data}`);
   } catch (err) {
-    console.error('This is the error in apiFetch.storeHistory');
+    console.error('This is the error in apiFetch.storeHistoryObj', err);
   }
 };
 
-apiFetch.getHistory = async () => {
+apiFetch.getHistory = async (userName) => {
   try {
     console.log('apiFetch');
-    const response = await fetch('http://localhost:3000/api/getHistory');
+    const response = await fetch(
+      `http://localhost:3000/api/getHistory?userName=${userName}`
+    );
     if (!response.ok) {
       throw new Error('Error in getting stored history.');
     }
@@ -92,10 +94,10 @@ apiFetch.getHistory = async () => {
   }
 };
 
-apiFetch.matchTitle = async (title) => {
+apiFetch.matchTitle = async (title, userName) => {
   try {
     const response = await fetch(
-      `http://localhost:3000/api/matchTitle/${title}`
+      `http://localhost:3000/api/matchTitle/${title}?userName=${userName}`
     );
 
     if (!response.ok) {
