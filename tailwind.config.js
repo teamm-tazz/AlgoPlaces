@@ -6,6 +6,8 @@ module.exports = {
         'open-sans': ['Open Sans', 'sans-serif'],
         inconsolata: ['Inconsolata', 'monospace'],
         poppins: ['Poppins', 'sans-serif'],
+        roboto: ['Roboto', 'sans-serif'],
+        'roboto-mono': ['Roboto Mono', 'monospace'],
       },
     },
   },

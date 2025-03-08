@@ -2,7 +2,14 @@ import React, { useState, useEffect } from 'react';
 import apiFetch from '../apiFetch';
 import { MutatingDots } from 'react-loader-spinner';
 
-function History({ loading, entryObj, setEntryObj, onClose }) {
+function History({
+  loading,
+  entryObj,
+  setEntryObj,
+  onClose,
+  refreshHistory,
+  setRefreshHistory,
+}) {
   const [historyObj, setHistoryObj] = useState([]);
   const [containerLoaded, setContainerLoaded] = useState(false);
   const [contentLoaded, setContentLoaded] = useState(false);
@@ -36,7 +43,7 @@ function History({ loading, entryObj, setEntryObj, onClose }) {
 
   useEffect(() => {
     getHistoryObject();
-  }, [entryObj]);
+  }, [entryObj, refreshHistory]);
 
   const handleMatchTitle = async (title) => {
     try {
