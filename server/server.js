@@ -15,7 +15,6 @@ const port = 3000;
 app.use(cors()); // Use cors middleware
 app.use(bodyParser.json());
 app.use('/api', apiRoutes);
-app.use(cors);
 
 // Global Error Handler
 app.use((err, req, res, next) => {
